@@ -14,4 +14,4 @@
 
 * Podział prac będzie realizowany na bieżąco zgodnie z postawionymi na dany tydzień problemami, gdzie nakład pracy na osobę będzie przypadał po około 50% zakresu zadań na dany tydzień.
 
-* Temat projektu z przedmiotu "Programowanie systemów rozproszonych" - "Cloud drive" (realizowany również przez obie osoby z tego zespołu projektowego), tematy prac inżynierskich - "Aplikacja do zarządzania drużynami sportowymi" i "Motoryzacyjny portal społecznościowy".
+* Temat projektu z przedmiotu "Programowanie systemów rozproszonych" - "Cloud drive" (realizowany również przez obie osoby z tego zespołu projektowego), tematy prac inżynierskich - "Aplikacja internetowa dla drużyn sportowych" i "Motoryzacyjny portal społecznościowy".
