@@ -1,0 +1,17 @@
+* Baran Szymon s088935@student.tu.kielce.pl 1ID21A, Bednarz Daniel s088939@student.tu.kielce.pl 1ID21A, 
+
+* 4. Narzędzia odwzorowania obiektowo - relacyjnego np. Hiberate, Oracle TopLink, Microsoft ADO.NET Entity Framework, ActiveRecord lub innego.
+
+* Platforma .NET, C#, Entity Framework, Microsoft SQL Server
+
+* Harmonogram prac:
+	- zapoznanie się z działaniem ORM,
+	- sporządzenie części teoretycznej projektu na podstawie dokumentacji narzędzia Entity Framework oraz literatury M. Fowler, „Architektura systemów zarządzania przedsiębiorstwem. Wzorce projektowe”,
+	- stworzenie projektu aplikacji, która będzie demonstrowała możliwości narzędzia odwzorowania obiektowo - relacyjnego (Entity Framework),
+	- zaprojektowanie schematu bazy danych zawierających relacje różnego typu (1:1, 1:N, M:N),
+	- odtworzenie w aplikacji za pomocą Entity Framework zaprojektowanego uprzednio schematu bazy danych,
+	- realizacja wstawiania danych za pomocą Entity Framework do poszczególnych tabel wraz z uwzględnieniem relacji pomiędzy encjami
+
+* Podział prac będzie realizowany na bieżąco zgodnie z postawionymi na dany tydzień problemami, gdzie nakład pracy na osobę będzie przypadał po około 50% zakresu zadań na dany tydzień.
+
+* Temat projektu z przedmiotu "Programowanie systemów rozproszonych" - "Cloud drive" (realizowany również przez obie osoby z tego zespołu projektowego), tematy prac inżynierskich - "Aplikacja do zarządzania drużynami sportowymi" i "Motoryzacyjny portal społecznościowy".
