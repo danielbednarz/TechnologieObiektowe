@@ -2,16 +2,19 @@
 
 * 4. Narzędzia odwzorowania obiektowo - relacyjnego np. Hiberate, Oracle TopLink, Microsoft ADO.NET Entity Framework, ActiveRecord lub innego.
 
-* Platforma .NET, C#, Entity Framework, Microsoft SQL Server
+* Platforma .NET, C#, porównanie narzędzi ORM: Entity Framework z NHibernate, z wykorzystaniem bazy danych Microsoft SQL Server
 
 * Harmonogram prac:
-	- zapoznanie się z działaniem ORM,
-	- sporządzenie części teoretycznej projektu na podstawie dokumentacji narzędzia Entity Framework oraz literatury M. Fowler, „Architektura systemów zarządzania przedsiębiorstwem. Wzorce projektowe”,
-	- stworzenie projektu aplikacji, która będzie demonstrowała możliwości narzędzia odwzorowania obiektowo - relacyjnego (Entity Framework),
+	- zapoznanie się z działaniem obu narzędzi ORM,
+	- sporządzenie części teoretycznej projektu na podstawie dokumentacji narzędzia Entity Framework, dokumentacji NHibernate oraz literatury M. Fowler, „Architektura systemów zarządzania przedsiębiorstwem. Wzorce projektowe” oraz źródeł internetowych,
+	- stworzenie projektu aplikacji, która będzie demonstrowała możliwości narzędzi odwzorowania obiektowo - relacyjnego (Entity Framework oraz NHibernate),
 	- zaprojektowanie schematu bazy danych zawierających relacje różnego typu (1:1, 1:N, M:N),
-	- odtworzenie w aplikacji za pomocą Entity Framework zaprojektowanego uprzednio schematu bazy danych,
-	- realizacja wstawiania danych za pomocą Entity Framework do poszczególnych tabel wraz z uwzględnieniem relacji pomiędzy encjami
+	- odtworzenie w aplikacji za pomocą Entity Framework oraz NHibernate zaprojektowanego uprzednio schematu bazy danych,
+	- realizacja wstawiania danych za pomocą Entity Framework i NHibernate do poszczególnych tabel wraz z uwzględnieniem relacji pomiędzy encjami,
+	- porównanie wyników będzie dotyczyło: czasów wykonania tych samych operacji, różnic w składni, ilości zajętego miejsca itp. pomiędzy Entity Framework a NHibernate.
 
-* Podział prac będzie realizowany na bieżąco zgodnie z postawionymi na dany tydzień problemami, gdzie nakład pracy na osobę będzie przypadał po około 50% zakresu zadań na dany tydzień.
+* Podział prac będzie realizowany na bieżąco zgodnie z postawionymi na dany tydzień problemami, gdzie nakład pracy na osobę będzie przypadał po około 50% zakresu zadań na dany tydzień, gdzie:
+	- Bednarz Daniel: Entity Framework,
+	- Baran Szymon: NHibernate.
 
 * Temat projektu z przedmiotu "Programowanie systemów rozproszonych" - "Cloud drive" (realizowany również przez obie osoby z tego zespołu projektowego), tematy prac inżynierskich - "Aplikacja internetowa dla drużyn sportowych" i "Motoryzacyjny portal społecznościowy".
