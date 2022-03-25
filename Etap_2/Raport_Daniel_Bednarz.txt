@@ -1,0 +1,8 @@
+W aktualnym etapie zostało zrealizowane:
+•	zaznajomienie się czym jest Entity Framework oraz jego zastosowania,
+•	wstępne zapoznanie się z dokumentacją Entity Framework,
+•	rozpoczęcie prac nad częścią teoretyczną dot. narzędzia.
+
+W kolejnym etapie:
+•	zestawienie aplikacji konsolowej, która wykorzystuje Entity Framework,
+•	dalsze zapoznanie się z dokumentacją narzędzia.
