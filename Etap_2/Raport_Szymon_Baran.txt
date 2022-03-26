@@ -1,0 +1,8 @@
+W aktualnym etapie:
+- zaznajomiono się z podstawowymi informacjami na temat ORM-a NHibernate,
+- rozpoczęto analizę porównawczą NHibernate do Entity Framework,
+- rozpoczęto realizację części teoretycznej projektu.
+
+Plany na kolejny etap:
+- dalszy rozwój części teoretycznej,
+- wykonanie testów działania ORM-a w praktyce.
