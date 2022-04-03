@@ -1,0 +1,7 @@
+W aktualnym etapie zosta³o zrealizowane:
+-	Przeniesienie czêœci teoretycznej do Wiki na Github,
+-	Przeczytanie czêœci rozdzia³u 3. Mapowanie do relacyjnych baz danych z ksi¹¿ki "Architektura systemów zarz¹dzania przedsiêbiorstwem. Wzorce projektowe." M. Fowlera,
+-	Zaprojektowanie wraz z koleg¹ Szymonem schematu bazy danych szpitala, która pos³u¿y jako przyk³ad przy realizacji bazy danych z poziomu ORM.
+
+W kolejnym etapie:
+-	Stworzenie aplikacji konsolowej wykorzystuj¹cej Entity Framework w celu odtworzenia z poziomu aplikacji zaprojektowanej bazy danych.
