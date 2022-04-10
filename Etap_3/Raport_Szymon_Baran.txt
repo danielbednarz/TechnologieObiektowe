@@ -1,0 +1,7 @@
+W aktualnym etapie:
+- zaprojektowano wspólnie schemat bazy danych szpitala, który będzie potrzebny w dalszej części projektu, podczas porównania ORM-ów,
+- wypożyczono książkę "Architektura systemów zarządzania przedsiębiorstwem. Wzorce projektowe" M. Fowlera oraz przeczytano 
+3 pierwsze podrozdziały rozdziału 3 o mapowaniu do relacyjnych baz danych.
+
+Plany na kolejny etap:
+- utworzenie aplikacji konsolowej wykorzystującej NHibernate.
