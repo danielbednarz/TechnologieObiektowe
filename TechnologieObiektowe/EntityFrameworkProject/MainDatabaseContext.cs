@@ -23,7 +23,7 @@ namespace EntityFrameworkProject
 
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("MainDatabaseContext"));
 
-            optionsBuilder.UseSqlServer("Server=DESKTOP-CP4DUVM;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;");
+            optionsBuilder.UseSqlServer("Server=OMEN-15\\SQLINSTANCE;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
