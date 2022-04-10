@@ -1,0 +1,9 @@
+W aktualnym etapie:
+- utworzono projekt z aplikacją konsolową NHibernateProject,
+- dodano podstawowe funkcjonalności w aplikacji:
+	- aktualizowanie tabel w bazie danych w oparciu o klasy w aplikacji,
+	- utworzenie klasy na wzór kontekstu bazodanowego z Entity Frameworku,
+	- przedstawiono dodawanie rekordu.
+
+Plany na kolejny etap:
+- dalszy rozwój aplikacji w oparciu o dokumentację narzędzia NHibernate.
