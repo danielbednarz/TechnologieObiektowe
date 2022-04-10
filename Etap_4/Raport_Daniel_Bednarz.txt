@@ -1,0 +1,9 @@
+W aktualnym etapie zosta³o zrealizowane:
+- utworzenie projektu z aplikacj¹ konsolow¹ EntityFrameworkProject,
+- dodano nastêpuj¹ce funkcjonalnoœci w projekcie:
+	- tworzenie bazy danych z poziomu aplikacji na podstawie wygenerowanej migracji,
+	- utworzono dwie encje oraz model po³¹czenia pomiêdzy nimi N:M (wiele do wielu),
+	- przedstawiono dodawanie rekordu.
+
+Plany na kolejny etap:
+- dalszy rozwój aplikacji w oparciu o dokumentacjê narzêdzia Entity Framework.
