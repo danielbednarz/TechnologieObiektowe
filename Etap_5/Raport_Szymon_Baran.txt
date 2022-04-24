@@ -1,0 +1,7 @@
+W aktualnym etapie:
+- dodano modele,
+- dodano pliki z mapowaniami.
+
+Plany na kolejny etap:
+- analiza biblioteki mapującej Fluent NHibernate,
+- rozwiązanie problemu dziedziczenia.
