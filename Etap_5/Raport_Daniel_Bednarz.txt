@@ -1,0 +1,6 @@
+W aktualnym etapie zosta³o zrealizowane:
+- utworzono modele na podstawie diagramu bazodanowego
+- zaimplementowano dziedziczenie oraz dodano przyk³adowy rekord za pomoc¹ Entity Framework
+
+Plany na kolejny etap:
+- dalszy rozwój aplikacji
