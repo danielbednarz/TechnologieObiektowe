@@ -7,6 +7,7 @@ using NHibernate.Driver;
 using NHibernate.Mapping.ByCode;
 using NHibernate.NetCore;
 using NHibernate.Tool.hbm2ddl;
+using NHibernateProject.Model;
 
 namespace NHibernateProject.Infrastructure
 {
@@ -34,7 +35,17 @@ namespace NHibernateProject.Infrastructure
             SchemaUpdate schemaUpdate = new SchemaUpdate(configuration);
             schemaUpdate.Execute(false, true);
 
+
             var sessionFactory = configuration.BuildSessionFactory();
+
+            // fluent NH
+            //var cfg = new StoreConfiguration();
+            //var sessionFactory = Fluently.Configure()
+            //   .Database(
+            //      MsSqlConfiguration.MsSql2012.ConnectionString(connectionString))
+            //      .Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg)))
+            //      .Create(false, false)
+            //      .BuildSessionFactory();
 
             services.AddSingleton(sessionFactory);
             services.AddScoped(factory => sessionFactory.OpenSession());

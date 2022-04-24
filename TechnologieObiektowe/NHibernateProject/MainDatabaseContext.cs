@@ -14,6 +14,9 @@ namespace NHibernateProject
         }
 
         public IQueryable<Medicament> Medicaments => _session.Query<Medicament>();
+        public IQueryable<Recipe> Recipes => _session.Query<Recipe>();
+        public IQueryable<RecipeMedicament> RecipeMedicaments => _session.Query<RecipeMedicament>();
+        public IQueryable<Department> Departments => _session.Query<Department>();
 
         public void BeginTransaction()
         {
@@ -36,6 +39,19 @@ namespace NHibernateProject
             {
                 _transaction.Dispose();
                 _transaction = null;
+            }
+        }
+
+        public async Task Add<T>(T entity)
+        {
+            await _session.SaveOrUpdateAsync(entity);
+        }
+
+        public async Task AddRange<T>(List<T> entity)
+        {
+            foreach (var item in entity)
+            {
+                await _session.SaveOrUpdateAsync(item);
             }
         }
 

@@ -5,9 +5,9 @@ using NHibernateProject.Model;
 
 namespace NHibernateProject.Mappings
 {
-    public class MedicamentMap : ClassMapping<Medicament>
+    public class DepartmentMap : ClassMapping<Department>
     {
-        public MedicamentMap()
+        public DepartmentMap()
         {
             Id(x => x.Id, x =>
             {
@@ -19,23 +19,18 @@ namespace NHibernateProject.Mappings
 
             Property(b => b.Name, x =>
             {
-                x.Length(50);
                 x.Type(NHibernateUtil.StringClob);
                 x.NotNullable(true);
             });
 
-            Bag(x => x.Recipes, collectionMapping =>
+            Property(b => b.PhoneNumber, x =>
             {
-                collectionMapping.Table("RecipeMedicaments");
-                collectionMapping.Cascade(Cascade.None);
-                collectionMapping.Key(k => k.Column("MedicamentId"));
-            },
-                map => map.ManyToMany(p => p.Column("RecipeId"))
-            );
+                x.Type(NHibernateUtil.Int32);
+            });
 
-            
+           
 
-            Table("Medicaments");
+            Table("Departments");
         }
     }
 }
