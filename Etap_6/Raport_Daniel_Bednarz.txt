@@ -1,0 +1,7 @@
+W aktualnym etapie zosta³o zrealizowane:
+- sporz¹dzono plan testów, na podstawie których bêd¹ porównywane narzêdzia Entity Framework oraz NHibernate,
+- przeczytano dokumentacjê dotycz¹c¹ mo¿liwoœci pomiaru czasu w testach wydajnoœciowych
+
+Plany na kolejny etap:
+- dalszy rozwój aplikacji
+- generowanie danych 
