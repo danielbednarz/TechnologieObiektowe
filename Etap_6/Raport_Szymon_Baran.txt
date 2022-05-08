@@ -1,0 +1,8 @@
+W aktualnym etapie:
+- zrealizowano plan testów do porównywania obu narzędzi ORM,
+- analiza metod dziedziczenia,
+- analiza dokumentacji dotyczącej biblioteki Fluent NHibernate.
+
+Plany na kolejny etap:
+- implementacja biblioteki Fluent NHibernate,
+- generowanie danych.
