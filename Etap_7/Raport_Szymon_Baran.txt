@@ -1,0 +1,7 @@
+W aktualnym etapie:
+- implementacja biblioteki Fluent NHibernate,
+- dodanie generatorów uzupełniających bazę danych.
+
+Plany na kolejny etap:
+- wprowadzenie poprawek w mapowaniu w Fluent NHibernate,
+- realizacja części teoretycznej w oparciu o dokumentację NHibernate.
