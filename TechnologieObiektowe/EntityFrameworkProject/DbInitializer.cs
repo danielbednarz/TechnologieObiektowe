@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataGenerator;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkProject
 {
@@ -16,33 +17,42 @@ namespace EntityFrameworkProject
 
         private static void AddMedicaments(MainDatabaseContext context)
         {
+            List<MedicamentVM> medicamentsVM = MedicamentsGenerator.GenerateMedicaments(30);
+
             if (context.Medicaments.Any())
             {
                 return;
             }
 
-            List<Medicament> medicaments = new()
-            {
-                new Medicament
-                {
-                    Name = "Ibuprom",
-                    Company = "Polfarmex",
-                    Type = "Tabletka powlekana"
+            //List<Medicament> medicaments = new()
+            //{
+            //    new Medicament
+            //    {
+            //        Name = "Ibuprom",
+            //        Company = "Polfarmex",
+            //        Type = "Tabletka powlekana"
 
-                },
-                new Medicament
-                {
-                    Name = "Apap",
-                    Company = "USP ZDROWIE",
-                    Type = "Tabletka powlekana"
-                },
-                new Medicament
-                {
-                    Name = "Acard",
-                    Company = "Acard",
-                    Type = "Tabletka powlekana"
-                },
-            };
+            //    },
+            //    new Medicament
+            //    {
+            //        Name = "Apap",
+            //        Company = "USP ZDROWIE",
+            //        Type = "Tabletka powlekana"
+            //    },
+            //    new Medicament
+            //    {
+            //        Name = "Acard",
+            //        Company = "Acard",
+            //        Type = "Tabletka powlekana"
+            //    },
+            //};
+
+            List<Medicament> medicaments = medicamentsVM.Select(x => new Medicament()
+            {
+                Name = x.Name,
+                Type = x.Type,
+                Company = x.Company
+            }).ToList();
 
             context.Medicaments.AddRange(medicaments);
             context.SaveChanges();
