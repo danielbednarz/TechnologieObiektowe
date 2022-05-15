@@ -1,0 +1,7 @@
+W aktualnym etapie zosta³o zrealizowane:
+- stworzenie generatora danych
+- zaimplementowanie generowania danych do Entity Framework
+
+Plany na kolejny etap:
+- kontynuowanie prac nad dziedziczeniem w Entity Framework
+- realizacja czêœci teoretycznej dotycz¹cej Entity Framework
