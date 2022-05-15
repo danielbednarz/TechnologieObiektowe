@@ -56,19 +56,6 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Recipes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -89,30 +76,6 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         name: "FK_Employees_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MedicamentRecipe",
-                columns: table => new
-                {
-                    MedicamentsId = table.Column<int>(type: "int", nullable: false),
-                    RecipesId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MedicamentRecipe", x => new { x.MedicamentsId, x.RecipesId });
-                    table.ForeignKey(
-                        name: "FK_MedicamentRecipe_Medicaments_MedicamentsId",
-                        column: x => x.MedicamentsId,
-                        principalTable: "Medicaments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MedicamentRecipe_Recipes_RecipesId",
-                        column: x => x.RecipesId,
-                        principalTable: "Recipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -198,6 +161,50 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Recipes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VisitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Recipes_Visits_VisitId",
+                        column: x => x.VisitId,
+                        principalTable: "Visits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MedicamentRecipe",
+                columns: table => new
+                {
+                    MedicamentsId = table.Column<int>(type: "int", nullable: false),
+                    RecipesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicamentRecipe", x => new { x.MedicamentsId, x.RecipesId });
+                    table.ForeignKey(
+                        name: "FK_MedicamentRecipe_Medicaments_MedicamentsId",
+                        column: x => x.MedicamentsId,
+                        principalTable: "Medicaments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MedicamentRecipe_Recipes_RecipesId",
+                        column: x => x.RecipesId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_DepartmentId",
                 table: "Employees",
@@ -207,6 +214,11 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                 name: "IX_MedicamentRecipe_RecipesId",
                 table: "MedicamentRecipe",
                 column: "RecipesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recipes_VisitId",
+                table: "Recipes",
+                column: "VisitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visits_DoctorId",
@@ -231,13 +243,13 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                 name: "TechnicalWorkers");
 
             migrationBuilder.DropTable(
-                name: "Visits");
-
-            migrationBuilder.DropTable(
                 name: "Medicaments");
 
             migrationBuilder.DropTable(
                 name: "Recipes");
+
+            migrationBuilder.DropTable(
+                name: "Visits");
 
             migrationBuilder.DropTable(
                 name: "Doctor");

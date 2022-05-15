@@ -138,7 +138,12 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("VisitId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VisitId");
 
                     b.ToTable("Recipes");
                 });
@@ -232,6 +237,17 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         .IsRequired();
 
                     b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("EntityFrameworkProject.Recipe", b =>
+                {
+                    b.HasOne("EntityFrameworkProject.Visit", "Visit")
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Visit");
                 });
 
             modelBuilder.Entity("EntityFrameworkProject.Visit", b =>
