@@ -1,52 +1,22 @@
-﻿using NHibernate;
-using NHibernate.Mapping.ByCode;
-using NHibernate.Mapping.ByCode.Conformist;
-using NHibernateProject.Model;
+﻿//using FluentNHibernate.Mapping;
+//using NHibernate;
+//using NHibernate.Mapping.ByCode;
+//using NHibernate.Mapping.ByCode.Conformist;
+//using NHibernateProject.Model;
 
-namespace NHibernateProject.Mappings
-{
-    public class VisitMap : ClassMapping<Visit>
-    {
-        public VisitMap()
-        {
-            Id(x => x.Id, x =>
-            {
-                x.Generator(Generators.Increment);
-                x.Type(NHibernateUtil.Int32);
-                x.Column("Id");
-                x.UnsavedValue(0);
-            });
+//namespace NHibernateProject.Mappings
+//{
+//    public class VisitMap : ClassMap<Visit>
+//    {
+//        public VisitMap()
+//        {
+//            Id(x => x.Id);
+//            Map(x => x.VisitDate);
+//            Map(x => x.Diagnosis);
+//            Map(x => x.Description);
+//            Map(x => x.Cost);
 
-            Property(b => b.VisitDate, x =>
-            {
-                x.Type(NHibernateUtil.DateTime);
-                x.NotNullable(true);
-            });
-
-            Property(b => b.Diagnosis, x =>
-            {
-                x.Type(NHibernateUtil.StringClob);
-            });
-
-            Property(b => b.Description, x =>
-            {
-                x.Type(NHibernateUtil.StringClob);
-            });
-
-            Property(b => b.Cost, x =>
-            {
-                x.Type(NHibernateUtil.Double);
-            });
-
-            Property(b => b.VisitDate, x =>
-            {
-                x.Length(50);
-                x.Type(NHibernateUtil.DateTime);
-                x.NotNullable(true);
-            });
-            
-
-            Table("Visits");
-        }
-    }
-}
+//            Table("Visits");
+//        }
+//    }
+//}

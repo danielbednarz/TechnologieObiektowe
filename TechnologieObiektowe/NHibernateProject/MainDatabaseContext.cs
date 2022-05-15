@@ -17,6 +17,9 @@ namespace NHibernateProject
         public IQueryable<Recipe> Recipes => _session.Query<Recipe>();
         public IQueryable<RecipeMedicament> RecipeMedicaments => _session.Query<RecipeMedicament>();
         public IQueryable<Department> Departments => _session.Query<Department>();
+        public IQueryable<Employee> Employees => _session.Query<Employee>();
+        public IQueryable<Visit> Visits => _session.Query<Visit>();
+        public IQueryable<Nurse> Nurses => _session.Query<Nurse>();
 
         public void BeginTransaction()
         {
@@ -44,7 +47,7 @@ namespace NHibernateProject
 
         public async Task Add<T>(T entity)
         {
-            await _session.SaveOrUpdateAsync(entity);
+            await _session.SaveAsync(entity);
         }
 
         public async Task AddRange<T>(List<T> entity)

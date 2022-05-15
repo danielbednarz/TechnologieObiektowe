@@ -10,6 +10,5 @@
         public virtual string Address { get; set; }
         public virtual double Salary { get; set; }
         public virtual Department Department { get; set; }
-        public virtual int DepartmentId { get; set; }
     }
 }

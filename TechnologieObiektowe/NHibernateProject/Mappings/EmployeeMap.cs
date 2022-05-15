@@ -51,7 +51,6 @@ namespace NHibernateProject.Mappings
             });
 
             ManyToOne(b => b.Department);
-
     
             Table("Employees");
         }

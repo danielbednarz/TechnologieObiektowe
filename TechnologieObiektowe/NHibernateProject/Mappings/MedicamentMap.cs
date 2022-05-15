@@ -24,6 +24,20 @@ namespace NHibernateProject.Mappings
                 x.NotNullable(true);
             });
 
+            Property(b => b.Type, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.StringClob);
+                x.NotNullable(false);
+            });
+
+            Property(b => b.Company, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.StringClob);
+                x.NotNullable(false);
+            });
+
             Bag(x => x.Recipes, collectionMapping =>
             {
                 collectionMapping.Table("RecipeMedicaments");
