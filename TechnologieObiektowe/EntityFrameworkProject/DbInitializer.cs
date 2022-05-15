@@ -13,6 +13,7 @@ namespace EntityFrameworkProject
             AddRecipes(context);
             AddDepartments(context);
             AddNurses(context);
+            AddTechnicalWorkers(context);
         }
 
         private static void AddMedicaments(MainDatabaseContext context)
@@ -23,29 +24,6 @@ namespace EntityFrameworkProject
             {
                 return;
             }
-
-            //List<Medicament> medicaments = new()
-            //{
-            //    new Medicament
-            //    {
-            //        Name = "Ibuprom",
-            //        Company = "Polfarmex",
-            //        Type = "Tabletka powlekana"
-
-            //    },
-            //    new Medicament
-            //    {
-            //        Name = "Apap",
-            //        Company = "USP ZDROWIE",
-            //        Type = "Tabletka powlekana"
-            //    },
-            //    new Medicament
-            //    {
-            //        Name = "Acard",
-            //        Company = "Acard",
-            //        Type = "Tabletka powlekana"
-            //    },
-            //};
 
             List<Medicament> medicaments = medicamentsVM.Select(x => new Medicament()
             {
@@ -85,13 +63,15 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            Department department = new()
-            {
-                Name = "Wydział Kardiologiczny",
-                PhoneNumber = 450
-            };
+            var departmentsVM = DepartmentsGenerator.GenerateDepartments();
 
-            context.Departments.Add(department);
+            List<Department> departments = departmentsVM.Select(x => new Department()
+            {
+                Name = x.Name,
+                PhoneNumber = x.PhoneNumber
+            }).ToList();
+
+            context.Departments.AddRange(departments);
             context.SaveChanges();
         }
 
@@ -102,19 +82,45 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            Nurse nurse = new()
+            var nursesVM = NursesGenerator.GenerateNurses(30);
+            var nurses = nursesVM.Select(x => new Nurse
             {
-                Name = "Jan",
-                Surname = "Kowalski",
-                Gender = 0,
-                Salary = 2400,
-                Address = "Kielce, ul. Wojska Polskiego",
-                BirthDate = DateTime.Now,
-                DepartmentId = context.Departments.FirstOrDefault(x => x.PhoneNumber == 450).Id,
-                Role = "Ciężkie prace"
-            };
+                Name = x.Name,
+                Surname = x.Surname,
+                Gender = x.Gender,
+                Role = x.Role,
+                Address = x.Address,
+                BirthDate = x.BirthDate,
+                Salary = x.Salary,
+                DepartmentId = x.DepartmentId
+            });
 
-            context.Nurses.Add(nurse);
+            context.AddRange(nurses);
+            context.SaveChanges();
+        }
+
+        private static void AddTechnicalWorkers(MainDatabaseContext context)
+        {
+            if (context.TechnicalWorkers.Any())
+            {
+                return;
+            }
+
+            var technicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(30);
+
+            var technicalWorkers = technicalWorkersVM.Select(x => new TechnicalWorker
+            {
+                Name = x.Name,
+                Surname = x.Surname,
+                Gender = x.Gender,
+                Role = x.Role,
+                Address = x.Address,
+                BirthDate = x.BirthDate,
+                Salary = x.Salary,
+                DepartmentId = x.DepartmentId
+            });
+
+            context.TechnicalWorkers.AddRange(technicalWorkers);
             context.SaveChanges();
         }
     }

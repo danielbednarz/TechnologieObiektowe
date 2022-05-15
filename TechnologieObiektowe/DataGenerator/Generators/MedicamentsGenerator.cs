@@ -2,13 +2,6 @@
 {
     public static class MedicamentsGenerator
     {
-        private static string GenerateMedicamentName()
-        {
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            return new string(Enumerable.Repeat(chars, random.Next(4, 15)).Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-
         private static string GenerateMedicamentType()
         {
             List<string> types = new List<string>() { "tabletki", "kapsulki", "syrop", "zastrzyk", "proszek", "zel", "krem" };
@@ -31,7 +24,7 @@
             {
                 MedicamentVM medicament = new MedicamentVM()
                 {
-                    Name = GenerateMedicamentName(),
+                    Name = GeneratorHelper.GenerateRandomString(),
                     Type = GenerateMedicamentType(),
                     Company = GenerateMedicamentCompany()
                 };
