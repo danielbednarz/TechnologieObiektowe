@@ -1,0 +1,9 @@
+W aktualnym etapie:
+- część teoretyczna - dodanie opisu mapowań w NHibernate,
+- mapowanie wygenerowanych danych na encje w projekcie NHibernate,
+- implementacja auto-mapowania w NHibernate.
+
+Plany na kolejny etap:
+- rozwój części teoretycznej dotyczącej narzędzia NHibernate,
+- wprowadzenie pomiarów czasowych dodawania wygenerowanych rekordów,
+- znaleźć rozwiązanie na posiadanie kilku metod mapowania w obrębie jednego projektu.
