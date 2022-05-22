@@ -7,6 +7,6 @@
         public string Type { get; set; }
         public string Company { get; set; }
 
-        public ICollection<Recipe> Recipes { get; set; }
+        public ICollection<MedicamentRecipe> MedicamentRecipes { get; set; }
     }
 }

@@ -6,6 +6,6 @@
         public DateTime IssueDate { get; set; }
         public int VisitId { get; set; }
         public virtual Visit Visit { get; set; }
-        public ICollection<Medicament> Medicaments { get; set; }
+        public ICollection<MedicamentRecipe> MedicamentRecipes { get; set; }
     }
 }

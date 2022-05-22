@@ -21,6 +21,7 @@ namespace EntityFrameworkProject
             AddPatients(context);
             AddVisits(context, firstDoctorId);
             AddRecipes(context);
+            AddMedicamentRecipes(context);
         }
 
         private static void AddMedicaments(MainDatabaseContext context)
@@ -45,7 +46,7 @@ namespace EntityFrameworkProject
 
         private static void AddDepartments(MainDatabaseContext context)
         {
-            if(context.Departments.Any())
+            if (context.Departments.Any())
             {
                 return;
             }
@@ -180,6 +181,16 @@ namespace EntityFrameworkProject
                 DoctorId = x.DoctorId
             }).ToList();
 
+            var visitsToUpdate = context.Visits.Where(x => x.VisitDate > DateTime.Now).ToList();
+
+            foreach (var visit in visitsToUpdate)
+            {
+                visit.Cost = 0;
+            }
+
+            context.Visits.UpdateRange(visitsToUpdate);
+            context.SaveChanges();
+
             context.Visits.AddRange(visits);
             context.SaveChanges();
         }
@@ -200,6 +211,27 @@ namespace EntityFrameworkProject
             }).ToList();
 
             context.Recipes.AddRange(recipes);
+            context.SaveChanges();
+        }
+
+        private static void AddMedicamentRecipes(MainDatabaseContext context)
+        {
+            var medicaments = context.Medicaments.ToList();
+            var recipes = context.Recipes.ToList();
+
+            Random random = new();
+
+            foreach (var recipe in recipes)
+            {
+                MedicamentRecipe medicamentRecipe = new()
+                {
+                    MedicamentId = medicaments[random.Next(1, medicaments.Count)].Id,
+                    RecipeId = recipe.Id
+                };
+
+                context.MedicamentRecipes.Add(medicamentRecipe);
+            }
+
             context.SaveChanges();
         }
     }

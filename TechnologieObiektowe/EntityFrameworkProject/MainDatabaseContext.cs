@@ -23,6 +23,7 @@ namespace EntityFrameworkProject
         public DbSet<Department> Departments { get; set; }
         public DbSet<TechnicalWorker> TechnicalWorkers { get; set; }
         public DbSet<Nurse> Nurses { get; set; }
+        public DbSet<MedicamentRecipe> MedicamentRecipes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,6 +42,15 @@ namespace EntityFrameworkProject
             modelBuilder.Entity<TechnicalWorker>().ToTable("TechnicalWorkers");
             modelBuilder.Entity<Nurse>().ToTable("Nurses");
             modelBuilder.Entity<Doctor>().ToTable("Doctor");
+            modelBuilder.Entity<MedicamentRecipe>().HasKey(x => new { x.MedicamentId, x.RecipeId });
+            modelBuilder.Entity<MedicamentRecipe>()
+                .HasOne(x => x.Medicament)
+                .WithMany(y => y.MedicamentRecipes)
+                .HasForeignKey(x => x.MedicamentId);
+            modelBuilder.Entity<MedicamentRecipe>()
+                .HasOne(x => x.Recipe)
+                .WithMany(y => y.MedicamentRecipes)
+                .HasForeignKey(x => x.RecipeId);
         }
     }
 }

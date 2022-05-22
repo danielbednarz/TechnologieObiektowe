@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace EntityFrameworkProject
 {
@@ -9,8 +10,14 @@ namespace EntityFrameworkProject
         {
             using var context = new MainDatabaseContext();
 
-            DbInitializer.Seed(context);
+            Stopwatch stopwatch = new();
 
+
+            stopwatch.Start();
+            DbInitializer.Seed(context);
+            stopwatch.Stop();
+
+            Console.WriteLine($"Czas stworzenia bazy oraz wypełnienia jej danymi: {stopwatch.Elapsed}");
             Console.WriteLine("Naciśnij klawisz, by zakończyc...");
             Console.ReadLine();
         }
