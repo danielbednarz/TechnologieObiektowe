@@ -1,0 +1,9 @@
+W aktualnym etapie zosta³o zrealizowane:
+- stworzenie w wiki na Github kolejnej strony zawieraj¹c¹ opis teoretyczny operacji zaimplementowanych w Entity Framework, które wykorzystywane s¹ podczas testów,
+- zast¹pienie dotychczas utworzonej automatycznie przez EF encji poœredniej, stworzon¹ encj¹. Skonfigurowanie jej w celu prawid³owego odwzorowania relacji M:N,
+- dodanie generowania danych do powy¿ej stworzonej tabeli poœredniej.
+
+Plany na kolejny etap:
+- sporz¹dzenie czêœci teoretycznej dotycz¹cej migracji oraz konfiguracji EF, a tak¿e poszczególnych encji,
+- sprawdzenie mo¿liwoœci pod k¹tem danych testów/pomiarów,
+- pierwsze pomiary.
