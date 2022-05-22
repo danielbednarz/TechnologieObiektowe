@@ -15,7 +15,7 @@
             Random random = new();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            return new string(Enumerable.Repeat(chars, random.Next(100, 5000)).Select(s => s[random.Next(s.Length)]).ToArray());
+            return new string(Enumerable.Repeat(chars, random.Next(50, 200)).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public static int GeneratePhoneNumber()

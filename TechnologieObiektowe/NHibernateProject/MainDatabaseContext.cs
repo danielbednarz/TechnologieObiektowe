@@ -19,7 +19,10 @@ namespace NHibernateProject
         public IQueryable<Department> Departments => _session.Query<Department>();
         public IQueryable<Employee> Employees => _session.Query<Employee>();
         public IQueryable<Visit> Visits => _session.Query<Visit>();
+        public IQueryable<Doctor> Doctors => _session.Query<Doctor>();
         public IQueryable<Nurse> Nurses => _session.Query<Nurse>();
+        public IQueryable<TechnicalWorker> TechnicalWorkers => _session.Query<TechnicalWorker>();
+        public IQueryable<Patient> Patients => _session.Query<Patient>();
 
         public void BeginTransaction()
         {
