@@ -1,0 +1,7 @@
+W aktualnym etapie:
+- dodano nowe mapowania - FluentMappings,
+- zrealizowano pierwszy test z wykorzystaniem klasy Stopwatch.
+
+Plany na kolejny etap:
+- opisanie teoretyczne problemów w mapowaniu w NHibernate,
+- ciąg dalszy pomiarów oraz testów.
