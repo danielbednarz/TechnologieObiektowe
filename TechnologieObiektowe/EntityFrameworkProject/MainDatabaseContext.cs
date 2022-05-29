@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkProject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace EntityFrameworkProject
 {
@@ -28,10 +29,12 @@ namespace EntityFrameworkProject
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var configuration = ConfigurationHelper.GetConfiguration();
-
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("MainDatabaseContext"));
 
-            optionsBuilder.UseSqlServer("Server=localhost;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;");
+            StringBuilder sb = new();
+
+
+            optionsBuilder.UseSqlServer("Server=localhost;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;").LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
