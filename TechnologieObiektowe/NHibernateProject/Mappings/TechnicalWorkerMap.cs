@@ -3,14 +3,14 @@ using NHibernateProject.Model;
 
 namespace NHibernateProject.Mappings
 {
-    public class NurseMap : SubclassMap<Nurse>
+    public class TechnicalWorkerMap : SubclassMap<TechnicalWorker>
     {
-        public NurseMap()
+        public TechnicalWorkerMap()
         {
             KeyColumn("Id");
             Map(x => x.Role);
 
-            Table("Nurses");
+            Table("TechnicalWorkers");
         }
     }
 }

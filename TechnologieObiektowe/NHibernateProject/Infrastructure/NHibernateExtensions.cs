@@ -25,7 +25,8 @@ namespace NHibernateProject.Infrastructure
             var sessionFactory = Fluently.Configure()
                .Database(
                   MsSqlConfiguration.MsSql2012.ConnectionString(connectionString).ShowSql())
-                  .Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
+                  //.Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
+                  .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Visit>().Conventions.Add<CustomForeignKeyConvention>())
                   .ExposeConfiguration(y => new SchemaExport(y).Create(true, true))
                   .BuildSessionFactory();
 

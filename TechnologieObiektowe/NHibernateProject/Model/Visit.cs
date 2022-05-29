@@ -9,6 +9,7 @@
         public virtual double Cost { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Doctor Doctor { get; set; }
+        public virtual IList<Recipe> Recipes { get; set; }
 
     }
 }

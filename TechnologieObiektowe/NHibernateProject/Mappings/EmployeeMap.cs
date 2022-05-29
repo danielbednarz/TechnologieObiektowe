@@ -1,57 +1,21 @@
-﻿using NHibernate;
-using NHibernate.Mapping.ByCode;
-using NHibernate.Mapping.ByCode.Conformist;
+﻿using FluentNHibernate.Mapping;
 using NHibernateProject.Model;
 
 namespace NHibernateProject.Mappings
 {
-    public class EmployeeMap : ClassMapping<Employee>
+    public class EmployeeMap : ClassMap<Employee>
     {
         public EmployeeMap()
         {
-            Id(x => x.Id, x =>
-            {
-                x.Generator(Generators.Increment);
-                x.Type(NHibernateUtil.Int32);
-                x.Column("Id");
-                x.UnsavedValue(0);
-            });
+            Id(x => x.Id);
+            Map(x => x.Name);
+            Map(x => x.Surname);
+            Map(x => x.BirthDate);
+            Map(x => x.Gender);
+            Map(x => x.Address);
+            Map(x => x.Salary);
+            References(x => x.Department).Column("DepartmentId");
 
-            Property(b => b.Name, x =>
-            {
-                x.Type(NHibernateUtil.StringClob);
-            });
-
-            Property(b => b.Surname, x =>
-            {
-                x.Type(NHibernateUtil.StringClob);
-                x.NotNullable(true);
-            });
-
-            Property(b => b.BirthDate, x =>
-            {
-                x.Type(NHibernateUtil.DateTime);
-                x.NotNullable(true);
-            });
-
-            Property(b => b.Gender, x =>
-            {
-                x.Type(NHibernateUtil.Int32);
-                x.NotNullable(true);
-            });
-
-            Property(b => b.Address, x =>
-            {
-                x.Type(NHibernateUtil.StringClob);
-            });
-
-            Property(b => b.Salary, x =>
-            {
-                x.Type(NHibernateUtil.Decimal);
-            });
-
-            ManyToOne(b => b.Department);
-    
             Table("Employees");
         }
     }

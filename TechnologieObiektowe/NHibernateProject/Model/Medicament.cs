@@ -6,6 +6,7 @@
         public virtual string Name { get; set; }
         public virtual string Type { get; set; }
         public virtual string Company { get; set; }
-        public virtual IList<Recipe> Recipes { get; set; }
+        public virtual IList<RecipeMedicament> RecipeMedicaments { get; set; }
+        //public virtual IList<Recipe> RecipeMedicaments { get; set; }
     }
 }

@@ -1,21 +1,15 @@
-﻿using NHibernate;
-using NHibernate.Mapping.ByCode;
-using NHibernate.Mapping.ByCode.Conformist;
+﻿using FluentNHibernate.Mapping;
 using NHibernateProject.Model;
 
 namespace NHibernateProject.Mappings
 {
-    public class RecipeMedicamentMap : ClassMapping<RecipeMedicament>
+    public class RecipeMedicamentMap : ClassMap<RecipeMedicament>
     {
         public RecipeMedicamentMap()
         {
-            Id(x => x.Id, x =>
-            {
-                x.Generator(Generators.Increment);
-                x.Type(NHibernateUtil.Int32);
-                x.Column("Id");
-                x.UnsavedValue(0);
-            });
+            Id(x => x.Id);
+            References(x => x.Recipe).Column("RecipeId");
+            References(x => x.Medicament).Column("MedicamentId");
 
             Table("RecipeMedicaments");
         }

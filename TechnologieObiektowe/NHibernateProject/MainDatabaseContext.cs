@@ -61,6 +61,19 @@ namespace NHibernateProject
             }
         }
 
+        public async Task UpdateRange<T>(List<T> entity)
+        {
+            foreach (var item in entity)
+            {
+                await _session.UpdateAsync(item);
+            }
+        }
+
+        public async Task AddMedicamentToRecipe(Recipe recipe)
+        {
+            await _session.SaveOrUpdateAsync(recipe);
+        }
+
         public async Task Save(Medicament entity)
         {
             await _session.SaveOrUpdateAsync(entity);

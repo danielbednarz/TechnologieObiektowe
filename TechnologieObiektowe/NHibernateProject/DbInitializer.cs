@@ -19,7 +19,7 @@ namespace NHibernateProject
             List<Patient> patients = await AddPatients(context);
             List<Visit> visits = await AddVisits(context, doctors, patients);
             List<Recipe> recipes = await AddRecipes(context, visits);
-            //await AddRecipeMedicaments(context, medicaments, recipes);
+            await AddRecipeMedicaments(context, recipes, medicaments);
             await context.Commit();
         }
 
@@ -206,17 +206,40 @@ namespace NHibernateProject
             return recipes;
         }
 
-        //private static async Task AddRecipeMedicaments(MainDatabaseContext context, List<Medicament> medicaments, List<Recipe> recipes)
-        //{
-        //    Random random = new();
+        private static async Task AddRecipeMedicaments(MainDatabaseContext context, List<Recipe> recipes, List<Medicament> medicaments)
+        {
+            if (context.RecipeMedicaments.Any())
+            {
+                return;
+            }
 
-        //    List<RecipeMedicament> recipeMedicaments = recipes.Select(x => new RecipeMedicament()
-        //    {
-        //        MedicamentId = medicaments[random.Next(1, medicaments.Count)].Id,
-        //        RecipeId = x.Id
-        //    }).ToList();
+            List<RecipeMedicament> list = new();
 
-        //    await context.AddRange(recipeMedicaments);
-        //}
+            Random rnd = new Random();
+            foreach (var recipe in recipes)
+            {
+                int count = rnd.Next(1, 4);
+                for (int i = 0; i < count; i++)
+                {
+                    int randMedicament = rnd.Next(0, medicaments.Count - 1);
+                    RecipeMedicament recipeMedicament = new RecipeMedicament()
+                    {
+                        Recipe = recipe,
+                        Medicament = medicaments[randMedicament]
+                    };
+                    list.Add(recipeMedicament);
+                }
+            }
+
+            await context.AddRange(list);
+
+            //List<Recipe> recipes = context.Recipes.Where(x => x.Id != null).ToList();
+            //foreach (var recipe in recipes)
+            //{
+            //    Medicament medicament = context.Medicaments.FirstOrDefault();
+            //    recipe.RecipeMedicaments.Add(medicament);
+            //    await context.AddMedicamentToRecipe(recipe);
+            //}
+        }
     }
 }
