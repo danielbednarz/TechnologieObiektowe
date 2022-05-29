@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace EntityFrameworkProject
@@ -8,17 +11,14 @@ namespace EntityFrameworkProject
     {
         public static void Main()
         {
-            using var context = new MainDatabaseContext();
+            var firstElapsedTime = StopwatchHelper.MeasureExecutionTime(DbInitializer.Seed);
 
-            Stopwatch stopwatch = new();
+            var secondElapsedTime = StopwatchHelper.MeasureExecutionTime(DbInitializer.Seed);
 
+            Logger.WriteLog($"Czas stworzenia bazy oraz wypełnienia jej danymi: {firstElapsedTime}");
+            Logger.WriteLog($"Czas sprawdzenia czy baza danych jest utworzona i wypełniona danymi: {secondElapsedTime}");
 
-            stopwatch.Start();
-            DbInitializer.Seed(context);
-            stopwatch.Stop();
-
-            Console.WriteLine($"Czas stworzenia bazy oraz wypełnienia jej danymi: {stopwatch.Elapsed}");
-            Console.WriteLine("Naciśnij klawisz, by zakończyc...");
+            Console.WriteLine("\nNaciśnij klawisz, by zakończyc...");
             Console.ReadLine();
         }
 
