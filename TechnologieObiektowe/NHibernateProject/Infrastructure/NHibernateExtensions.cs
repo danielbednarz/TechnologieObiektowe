@@ -24,10 +24,10 @@ namespace NHibernateProject.Infrastructure
             StoreConfiguration cfg = new StoreConfiguration();
             var sessionFactory = Fluently.Configure()
                .Database(
-                  MsSqlConfiguration.MsSql2012.ConnectionString(connectionString).ShowSql())
+                  MsSqlConfiguration.MsSql2012.ConnectionString(connectionString)/*.ShowSql()*/)
                   //.Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
                   .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Visit>().Conventions.Add<CustomForeignKeyConvention>())
-                  .ExposeConfiguration(y => new SchemaExport(y).Create(true, true))
+                  .ExposeConfiguration(y => new SchemaExport(y).Create(false, true))
                   .BuildSessionFactory();
 
             return sessionFactory.OpenSession();

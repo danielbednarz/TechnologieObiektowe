@@ -20,6 +20,7 @@ namespace NHibernateProject
             List<Visit> visits = await AddVisits(context, doctors, patients);
             List<Recipe> recipes = await AddRecipes(context, visits);
             await AddRecipeMedicaments(context, recipes, medicaments);
+
             await context.Commit();
         }
 

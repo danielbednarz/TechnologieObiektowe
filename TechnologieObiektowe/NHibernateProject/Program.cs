@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NHibernateProject;
 using NHibernateProject.Infrastructure;
 using NHibernateProject.Model;
+using System.Diagnostics;
 
 Console.WriteLine("Rozpoczynam działanie...");
 
@@ -20,7 +21,12 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
     try
     {
         context.BeginTransaction();
-        await DbInitializer.Seed(context);
+        Stopwatch watch = new();
+        watch.Start();
+        var t1 = Task.Run(async () => { await DbInitializer.Seed(context); });
+        await Task.Factory.ContinueWhenAll(new[] { t1 }, tasks => watch.Stop());
+        string time = watch.Elapsed.ToString();
+        Console.WriteLine($"Dodawanie danych trwalo {time}.");
     }
     catch (Exception ex)
     {
