@@ -1,0 +1,8 @@
+W aktualnym etapie zosta³o zrealizowane:
+- implementacja klasy Logger, s³u¿¹cej do logowania odpowiednich pomiarów do pliku tekstowego,
+- implementacja metody pomocniczej wykorzystuj¹cej klasê Stopwatch do pomiaru czasu wykonywania danych operacji,
+- pierwsze testy z wykorzystaniem powy¿szych implementacji.
+
+Plany na kolejny etap:
+- sporz¹dzenie czêœci teoretycznej dotycz¹cej migracji oraz konfiguracji EF, a tak¿e poszczególnych encji,
+- dalsze pomiary/testy.
