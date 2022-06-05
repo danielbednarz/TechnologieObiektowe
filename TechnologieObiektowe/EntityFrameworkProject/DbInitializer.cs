@@ -27,9 +27,13 @@ namespace EntityFrameworkProject
             AddVisits(context, firstDoctorId);
             AddRecipes(context);
             AddMedicamentRecipes(context);
+
+            
         }
 
-             
+
+
+
         private static void AddMedicaments(MainDatabaseContext context)
         {
             List<MedicamentVM> medicamentsVM = MedicamentsGenerator.GenerateMedicaments(30);
