@@ -1,0 +1,8 @@
+W aktualnym etapie:
+- realizacja pierwszych testów,
+- opis na wiki wykonanych testów,
+- opis teoretyczny typów dziedziczeń.
+
+Plany na kolejny etap:
+- dalsze testy,
+- rozwój części teoretycznej.
