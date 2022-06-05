@@ -1,0 +1,7 @@
+W aktualnym etapie zosta³o zrealizowane:
+- rozszerzenie czêœci teoretycznej dotycz¹cej testów (dodanie zapytañ SQL, otrzymanych wyników, zapytañ wygenerowanych przez EF),
+- implementacja testów do EF, weryfikacja poprawnoœci uzyskanych wyników
+
+Plany na kolejny etap:
+- generowanie pliku CSV z uzyskanymi wynikami,
+- dalsze testy
