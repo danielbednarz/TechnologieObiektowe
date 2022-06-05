@@ -18,6 +18,7 @@ namespace NHibernateProject.Mappings
               .Inverse()
               .KeyColumn("RecipeId")
               .Cascade.All();
+            References(x => x.Visit).Column("VisitId");
 
             Table("Recipes");
         }

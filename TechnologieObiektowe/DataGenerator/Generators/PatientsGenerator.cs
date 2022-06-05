@@ -12,16 +12,14 @@
             Random random = new();
             List<PatientVM> patients = new();
             List<DepartmentVM> departments = DepartmentsGenerator.GenerateDepartments();
-            bool isFemale = false;
-
 
             for (int i = 0; i < n; i++)
             {
+                bool isFemale = false;
                 if (random.Next(0, 2) == 1)
                 {
                     isFemale = true;
                 }
-
                 PatientVM patient = new()
                 {
                     Name = isFemale ? FemaleNames[random.Next(FemaleNames.Length)] : MaleNames[random.Next(MaleNames.Length)],

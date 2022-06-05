@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NHibernateProject;
 using NHibernateProject.Infrastructure;
 using NHibernateProject.Model;
+using NHibernateProject.Tests;
 using System.Diagnostics;
 
 Console.WriteLine("Rozpoczynam działanie...");
@@ -27,6 +28,25 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
         await Task.Factory.ContinueWhenAll(new[] { t1 }, tasks => watch.Stop());
         string time = watch.Elapsed.ToString();
         Console.WriteLine($"Dodawanie danych trwalo {time}.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        await context.Rollback();
+    }
+    finally 
+    {
+        context.CloseTransaction();
+        Console.WriteLine("Zakończono działanie");
+    }
+
+    try
+    {
+        context.BeginTransaction();
+        Query.SelectReceipts(context);
+        Query.SelectDepartmentsVisitsCosts(context);
+        Query.SelectCompaniesWithMedicamentsCount(context);
+        Query.SelectPatientWithMostMedicines(context);
     }
     catch (Exception ex)
     {
