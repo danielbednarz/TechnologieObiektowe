@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DataGenerator;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NHibernateProject;
@@ -16,23 +17,21 @@ Console.WriteLine("Rozpoczynam działanie...");
 //    })
 //    .Build();
 
-using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTANCE;Database=NHDatabase;Trusted_Connection=True;Encrypt=False;"))
+using (var session = NHibernateExtensions.OpenSession("Server=localhost;Database=NHDatabase;Trusted_Connection=True;Encrypt=False;"))
 {
     MainDatabaseContext context = new MainDatabaseContext(session);
     try
     {
         context.BeginTransaction();
-        Stopwatch watch = new();
-        watch.Start();
-        var t1 = Task.Run(async () => { await DbInitializer.Seed(context); });
-        await Task.Factory.ContinueWhenAll(new[] { t1 }, tasks => watch.Stop());
-        string time = watch.Elapsed.ToString();
-        Console.WriteLine($"Dodawanie danych trwalo {time}.");
+
+        var seedElapsedTime = StopwatchHelper.MeasureExecutionTime(() => DbInitializer.Seed(context));
+
+        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Create, seedElapsedTime);
     }
     catch (Exception ex)
     {
         Console.WriteLine(ex.ToString());
-        await context.Rollback();
+        await context.RollbackAsync();
     }
     finally 
     {
@@ -43,15 +42,23 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
     try
     {
         context.BeginTransaction();
-        Query.SelectReceipts(context);
-        Query.SelectDepartmentsVisitsCosts(context);
-        Query.SelectCompaniesWithMedicamentsCount(context);
-        Query.SelectPatientWithMostMedicines(context);
+
+        var selectReceiptsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectReceipts(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectReceiptsElapsedTime);
+
+        var selectDepartmentsVisitsCostsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectDepartmentsVisitsCosts(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectDepartmentsVisitsCostsElapsedTime);
+
+        var selectCompaniesWithMedicamentsCountElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectCompaniesWithMedicamentsCount(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectCompaniesWithMedicamentsCountElapsedTime);
+
+        var selectPatientWithMostMedicinesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectPatientWithMostMedicines(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectPatientWithMostMedicinesElapsedTime);
     }
     catch (Exception ex)
     {
         Console.WriteLine(ex.ToString());
-        await context.Rollback();
+        await context.RollbackAsync();
     }
     finally 
     {

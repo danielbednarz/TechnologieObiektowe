@@ -1,16 +1,25 @@
 ﻿using DataGenerator;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Diagnostics;
 
 namespace EntityFrameworkProject
 {
     public class DbInitializer
     {
-        const int visitCount = 10000;
-        const int doctorCount = 40;
-        const int patientCount = 1000;
+        //private const int medicamentCount = 2000;
+        //private const int visitCount = 100000;
+        //private const int recipeCount = 150000;
+        //private const int doctorCount = 5000;
+        //private const int patientCount = 40000;
+        //private const int nurseCount = 10000;
+        //private const int technicalWorkerCount = 500;
+
+        private const int medicamentCount = 200;
+        private const int visitCount = 1000;
+        private const int recipesCount = 1500;
+        private const int doctorsCount = 50;
+        private const int patientsCount = 400;
+        private const int nursesCount = 100;
+        private const int technicalWorkersCount = 50;
 
         public static void Seed()
         {
@@ -27,16 +36,12 @@ namespace EntityFrameworkProject
             AddVisits(context, firstDoctorId);
             AddRecipes(context);
             AddMedicamentRecipes(context);
-
-            
         }
-
-
 
 
         private static void AddMedicaments(MainDatabaseContext context)
         {
-            List<MedicamentVM> medicamentsVM = MedicamentsGenerator.GenerateMedicaments(30);
+            List<MedicamentVM> medicamentsVM = MedicamentsGenerator.GenerateMedicaments(medicamentCount);
 
             if (context.Medicaments.Any())
             {
@@ -51,9 +56,9 @@ namespace EntityFrameworkProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Medicaments.AddRange(medicaments));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Medicaments: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Medicaments");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
 
@@ -73,9 +78,9 @@ namespace EntityFrameworkProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Departments.AddRange(departments));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Departments: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Departments");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Departments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddNurses(MainDatabaseContext context)
@@ -85,7 +90,7 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            var nursesVM = NursesGenerator.GenerateNurses(30);
+            var nursesVM = NursesGenerator.GenerateNurses(nursesCount);
             var nurses = nursesVM.Select(x => new Nurse
             {
                 Name = x.Name,
@@ -99,9 +104,9 @@ namespace EntityFrameworkProject
             });
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Nurses.AddRange(nurses));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Nurses: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Nurses");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddTechnicalWorkers(MainDatabaseContext context)
@@ -111,7 +116,7 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            var technicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(30);
+            var technicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(technicalWorkersCount);
 
             var technicalWorkers = technicalWorkersVM.Select(x => new TechnicalWorker
             {
@@ -126,9 +131,9 @@ namespace EntityFrameworkProject
             });
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.TechnicalWorkers.AddRange(technicalWorkers));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli TechnicalWorkers: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "TechnicalWorkers");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static int AddDoctors(MainDatabaseContext context)
@@ -138,7 +143,7 @@ namespace EntityFrameworkProject
                 return context.Doctors.First().Id;
             }
 
-            List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorCount);
+            List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorsCount);
 
             List<Doctor> doctors = doctorsVM.Select(x => new Doctor
             {
@@ -153,9 +158,9 @@ namespace EntityFrameworkProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Doctors.AddRange(doctors));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Doctors: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Doctors");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
 
             // Pobierane jest ID pierwszego doktora
             return doctors.First().Id;
@@ -168,7 +173,7 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            List<PatientVM> patientsVM = PatientsGenerator.GeneratePatients(patientCount);
+            List<PatientVM> patientsVM = PatientsGenerator.GeneratePatients(patientsCount);
 
             List<Patient> patients = patientsVM.Select(x => new Patient
             {
@@ -181,9 +186,9 @@ namespace EntityFrameworkProject
 
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Patients.AddRange(patients));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Patients: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Patients");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Patients, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddVisits(MainDatabaseContext context, int firstDoctorId)
@@ -193,7 +198,7 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            List<VisitVM> visitsVM = VisitsGenerator.GenerateVisits(visitCount, doctorCount, patientCount, firstDoctorId);
+            List<VisitVM> visitsVM = VisitsGenerator.GenerateVisits(visitCount, doctorsCount, patientsCount, firstDoctorId);
 
             List<Visit> visits = visitsVM.Select(x => new Visit
             {
@@ -216,9 +221,9 @@ namespace EntityFrameworkProject
             context.SaveChanges();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Visits.AddRange(visits));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Visits: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Visits");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddRecipes(MainDatabaseContext context)
@@ -228,7 +233,7 @@ namespace EntityFrameworkProject
                 return;
             }
 
-            List<RecipeVM> recipesVM = RecipesGenerator.GenerateRecipes(8000, visitCount);
+            List<RecipeVM> recipesVM = RecipesGenerator.GenerateRecipes(recipesCount, visitCount);
 
             List<Recipe> recipes = recipesVM.Select(x => new Recipe
             {
@@ -237,14 +242,14 @@ namespace EntityFrameworkProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Recipes.AddRange(recipes));
-            Logger.WriteLog($"Czas wykonania AddRange() dla tabeli Recipes: {addRangeElapsedTime}");
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            SaveChangesAndLogTime(context, "Recipes");
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddMedicamentRecipes(MainDatabaseContext context)
         {
-            if (context.MedicamentRecipes.Any())
+            if (context.RecipeMedicaments.Any())
             {
                 return;
             }
@@ -254,24 +259,24 @@ namespace EntityFrameworkProject
 
             Random random = new();
 
+            List<RecipeMedicament> recipeMedicamets = new();
+
             foreach (var recipe in recipes)
             {
-                MedicamentRecipe medicamentRecipe = new()
+                RecipeMedicament recipeMedicament = new()
                 {
                     MedicamentId = medicaments[random.Next(1, medicaments.Count)].Id,
                     RecipeId = recipe.Id
                 };
 
-                context.MedicamentRecipes.Add(medicamentRecipe);
+                recipeMedicamets.Add(recipeMedicament);
             }
 
-            SaveChangesAndLogTime(context, "MedicamentRecipes");
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.RecipeMedicaments.AddRange(recipeMedicamets));
+            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
+
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
-        private static void SaveChangesAndLogTime(MainDatabaseContext context, string tableName)
-        {
-            var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
-            Logger.WriteLog($"Czas wykonania SaveChanges() dla tabeli {tableName}: {saveChangesElapsedTime}");
-        }
     }
 }

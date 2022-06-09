@@ -6,7 +6,7 @@ namespace EntityFrameworkProject
     {
         public static void Select1(MainDatabaseContext context)
         {
-            var query = context.MedicamentRecipes.Include(x => x.Medicament)
+            var query = context.RecipeMedicaments.Include(x => x.Medicament)
                 .Include(x => x.Recipe)
                     .ThenInclude(y => y.Visit)
                     .ThenInclude(z => z.Patient)
@@ -54,7 +54,7 @@ namespace EntityFrameworkProject
          
         public static void Select3(MainDatabaseContext context)
         {
-            var query = context.MedicamentRecipes.Include(x => x.Medicament)
+            var query = context.RecipeMedicaments.Include(x => x.Medicament)
                 .Include(x => x.Recipe)
                     .ThenInclude(y => y.Visit)
                 .GroupBy(x => new { Company = x.Medicament.Company, Name = x.Medicament.Name })
@@ -75,7 +75,7 @@ namespace EntityFrameworkProject
 
         public static void Select4(MainDatabaseContext context)
         {
-            var query = context.MedicamentRecipes
+            var query = context.RecipeMedicaments
                 .Include(x => x.Recipe)
                     .ThenInclude(y => y.Visit)
                     .ThenInclude(z => z.Patient)

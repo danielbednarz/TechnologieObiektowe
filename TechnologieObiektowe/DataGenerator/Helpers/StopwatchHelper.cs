@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace EntityFrameworkProject
+namespace DataGenerator
 {
     public class StopwatchHelper
     {

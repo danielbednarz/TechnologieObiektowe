@@ -24,15 +24,12 @@ namespace EntityFrameworkProject
         public DbSet<Department> Departments { get; set; }
         public DbSet<TechnicalWorker> TechnicalWorkers { get; set; }
         public DbSet<Nurse> Nurses { get; set; }
-        public DbSet<MedicamentRecipe> MedicamentRecipes { get; set; }
+        public DbSet<RecipeMedicament> RecipeMedicaments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var configuration = ConfigurationHelper.GetConfiguration();
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("MainDatabaseContext"));
-
-            StringBuilder sb = new();
-
 
             optionsBuilder.UseSqlServer("Server=localhost;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;").LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
@@ -45,12 +42,12 @@ namespace EntityFrameworkProject
             modelBuilder.Entity<TechnicalWorker>().ToTable("TechnicalWorkers");
             modelBuilder.Entity<Nurse>().ToTable("Nurses");
             modelBuilder.Entity<Doctor>().ToTable("Doctor");
-            modelBuilder.Entity<MedicamentRecipe>().HasKey(x => new { x.MedicamentId, x.RecipeId });
-            modelBuilder.Entity<MedicamentRecipe>()
+            modelBuilder.Entity<RecipeMedicament>().HasKey(x => new { x.MedicamentId, x.RecipeId });
+            modelBuilder.Entity<RecipeMedicament>()
                 .HasOne(x => x.Medicament)
                 .WithMany(y => y.MedicamentRecipes)
                 .HasForeignKey(x => x.MedicamentId);
-            modelBuilder.Entity<MedicamentRecipe>()
+            modelBuilder.Entity<RecipeMedicament>()
                 .HasOne(x => x.Recipe)
                 .WithMany(y => y.MedicamentRecipes)
                 .HasForeignKey(x => x.RecipeId);

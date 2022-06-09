@@ -29,14 +29,24 @@ namespace NHibernateProject
             _transaction = _session.BeginTransaction();
         }
 
-        public async Task Commit()
+        public async Task CommitAsync()
         {
             await _transaction.CommitAsync();
         }
 
-        public async Task Rollback()
+        public void Commit()
+        {
+            _transaction.Commit();
+        }
+
+        public async Task RollbackAsync()
         {
             await _transaction.RollbackAsync();
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
         }
 
         public void CloseTransaction()
@@ -48,12 +58,17 @@ namespace NHibernateProject
             }
         }
 
-        public async Task Add<T>(T entity)
+        public async Task AddAsync<T>(T entity)
         {
             await _session.SaveAsync(entity);
         }
 
-        public async Task AddRange<T>(List<T> entity)
+        public void Add<T>(T entity)
+        {
+            _session.Save(entity);
+        }
+
+        public async Task AddRangeAsync<T>(List<T> entity)
         {
             foreach (var item in entity)
             {
@@ -61,7 +76,15 @@ namespace NHibernateProject
             }
         }
 
-        public async Task UpdateRange<T>(List<T> entity)
+        public void AddRange<T>(List<T> entity)
+        {
+            foreach (var item in entity)
+            {
+                _session.SaveOrUpdate(item);
+            }
+        }
+
+        public async Task UpdateRangeAsync<T>(List<T> entity)
         {
             foreach (var item in entity)
             {
@@ -69,17 +92,25 @@ namespace NHibernateProject
             }
         }
 
-        public async Task AddMedicamentToRecipe(Recipe recipe)
+        public void UpdateRange<T>(List<T> entity)
+        {
+            foreach (var item in entity)
+            {
+                _session.Update(item);
+            }
+        }
+
+        public async Task AddMedicamentToRecipeAsync(Recipe recipe)
         {
             await _session.SaveOrUpdateAsync(recipe);
         }
 
-        public async Task Save(Medicament entity)
+        public async Task SaveAsync(Medicament entity)
         {
             await _session.SaveOrUpdateAsync(entity);
         }
 
-        public async Task Delete(Medicament entity)
+        public async Task DeleteAsync(Medicament entity)
         {
             await _session.DeleteAsync(entity);
         }

@@ -1,6 +1,6 @@
 ﻿namespace EntityFrameworkProject
 {
-    public class MedicamentRecipe
+    public class RecipeMedicament
     {
         public int MedicamentId { get; set; }
         public Medicament Medicament { get; set; }
