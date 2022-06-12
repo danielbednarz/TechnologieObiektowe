@@ -38,6 +38,9 @@ namespace EntityFrameworkProject
 
             var update1ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Update1(context));
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, update1ElapsedTime);
+
+            var update2ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Update2(context));
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Doctors, OperationType.Update, update2ElapsedTime);
         }
 
     }
