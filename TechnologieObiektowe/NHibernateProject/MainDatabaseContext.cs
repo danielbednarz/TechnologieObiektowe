@@ -80,6 +80,14 @@ namespace NHibernateProject
         {
             foreach (var item in entity)
             {
+                _session.Save(item);
+            }
+        }
+
+        public void SaveOrUpdateRange<T>(List<T> entity)
+        {
+            foreach (var item in entity)
+            {
                 _session.SaveOrUpdate(item);
             }
         }
