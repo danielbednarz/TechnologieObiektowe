@@ -110,5 +110,17 @@ namespace EntityFrameworkProject
 
             context.SaveChanges();
         }
+
+        public static void Update2(MainDatabaseContext context)
+        {
+            List<Doctor> doctors = context.Doctors
+                .Include(x => x.Department)
+                .Include(x => x.Visits)
+                .Where(x => x.Department.Name.Contains("Chorób") && x.Specialization == "Alergolog").ToList();
+
+            doctors.ForEach(x => x.Salary += x.Visits.Count * 20);
+
+            context.SaveChanges();
+        }
     }
 }
