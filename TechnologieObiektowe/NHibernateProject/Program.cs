@@ -54,6 +54,14 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
 
         var selectPatientWithMostMedicinesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectPatientWithMostMedicines(context));
         Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectPatientWithMostMedicinesElapsedTime);
+
+        var updateVisitDescriptionsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.UpdateVisitDescriptions(context));
+        Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, updateVisitDescriptionsElapsedTime);
+
+        var updateDoctorsSalaryByDepartmentByVisitCount = StopwatchHelper.MeasureExecutionTime(() => Query.UpdateDoctorsSalaryByDepartmentByVisitCount(context));
+        Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, updateDoctorsSalaryByDepartmentByVisitCount);
+
+        context.Commit();
     }
     catch (Exception ex)
     {

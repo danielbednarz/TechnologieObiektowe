@@ -109,5 +109,28 @@ namespace NHibernateProject.Tests
 
             Console.WriteLine("\n\n");
         }
+
+        public static void UpdateVisitDescriptions(MainDatabaseContext context)
+        {
+            var recipeMedicaments = context.RecipeMedicaments
+                .Fetch(x => x.Medicament)
+                .Fetch(x => x.Recipe)
+                    .ThenFetch(y => y.Visit)
+                .Where(x => x.Medicament.Company == "Merck" && (x.Medicament.Type == "proszek" || x.Medicament.Type == "zastrzyk")).ToList();
+
+            recipeMedicaments.ForEach(x => x.Recipe.Visit.Description = "Leki wycofane");
+            context.UpdateRange(recipeMedicaments);
+        }
+
+        public static void UpdateDoctorsSalaryByDepartmentByVisitCount(MainDatabaseContext context)
+        {
+            List<Doctor> doctors = context.Doctors
+                .Fetch(x => x.Department)
+                .Fetch(x => x.Visits)
+                .Where(x => x.Department.Name.Like("%Chorób%") && x.Specialization == "Alergolog").ToList();
+
+            doctors.ForEach(x => x.Salary += x.Visits.Count * 20);
+            context.UpdateRange(doctors);
+        }
     }
 }

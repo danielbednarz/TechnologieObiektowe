@@ -15,13 +15,12 @@
             List<DepartmentVM> departments = DepartmentsGenerator.GenerateDepartments();
             bool isFemale = false;
 
-            if (random.Next(0, 2) == 1)
-            {
-                isFemale = true;
-            }
-
             for (int i = 0; i < n; i++)
             {
+                if (random.Next(0, 2) == 1)
+                {
+                    isFemale = true;
+                }
                 DoctorVM doctor = new()
                 {
                     Name = isFemale ? FemaleNames[random.Next(FemaleNames.Length)] : MaleNames[random.Next(MaleNames.Length)],
