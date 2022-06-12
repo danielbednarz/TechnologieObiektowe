@@ -7,10 +7,8 @@ namespace NHibernateProject.Mappings
     {
         public TechnicalWorkerMap()
         {
-            KeyColumn("Id");
+            DiscriminatorValue(@"TechnicalWorker");
             Map(x => x.Role);
-
-            Table("TechnicalWorkers");
         }
     }
 }

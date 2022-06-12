@@ -7,14 +7,12 @@ namespace NHibernateProject.Mappings
     {
         public DoctorMap()
         {
-            KeyColumn("Id");
+            DiscriminatorValue(@"Doctor");
             Map(x => x.Specialization);
             HasMany(x => x.Visits)
               .Inverse()
               .KeyColumn("DoctorId")
               .Cascade.All();
-
-            Table("Doctors");
         }
     }
 }

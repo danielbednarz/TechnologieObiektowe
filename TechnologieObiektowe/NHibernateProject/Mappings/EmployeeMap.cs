@@ -8,6 +8,7 @@ namespace NHibernateProject.Mappings
         public EmployeeMap()
         {
             Id(x => x.Id);
+            DiscriminateSubClassesOnColumn("ClassType").Not.Nullable();
             Map(x => x.Name);
             Map(x => x.Surname);
             Map(x => x.BirthDate);

@@ -17,7 +17,7 @@ Console.WriteLine("Rozpoczynam działanie...");
 //    })
 //    .Build();
 
-using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTANCE;Database=NHDatabase;Trusted_Connection=True;Encrypt=False;"))
+using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTANCE;Database=NHDatabaseTPH;Trusted_Connection=True;Encrypt=False;"))
 {
     MainDatabaseContext context = new MainDatabaseContext(session);
     try
