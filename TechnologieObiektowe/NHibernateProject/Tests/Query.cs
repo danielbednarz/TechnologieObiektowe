@@ -113,24 +113,34 @@ namespace NHibernateProject.Tests
         public static void UpdateVisitDescriptions(MainDatabaseContext context)
         {
             var recipeMedicaments = context.RecipeMedicaments
+                .Where(x => x.Medicament.Company == "Merck" && (x.Medicament.Type == "proszek" || x.Medicament.Type == "zastrzyk"))
                 .Fetch(x => x.Medicament)
                 .Fetch(x => x.Recipe)
                     .ThenFetch(y => y.Visit)
-                .Where(x => x.Medicament.Company == "Merck" && (x.Medicament.Type == "proszek" || x.Medicament.Type == "zastrzyk")).ToList();
+                .Select(x => new { RecipeMedicament = x, Recipe = x.Recipe, Visit = x.Recipe.Visit })
+                .ToList();
 
-            recipeMedicaments.ForEach(x => x.Recipe.Visit.Description = "Leki wycofane");
-            context.UpdateRange(recipeMedicaments);
+            foreach (var record in recipeMedicaments)
+            {
+                record.Visit.Description = "Leki wycofane";
+                context.Update(record.Visit);
+            }
         }
 
         public static void UpdateDoctorsSalaryByDepartmentByVisitCount(MainDatabaseContext context)
         {
-            List<Doctor> doctors = context.Doctors
+            var doctors = context.Doctors
                 .Fetch(x => x.Department)
                 .Fetch(x => x.Visits)
-                .Where(x => x.Department.Name.Like("%Chorób%") && x.Specialization == "Alergolog").ToList();
+                .Where(x => x.Department.Name.Like("%Chorób%") && x.Specialization == "Alergolog")
+                .Select(x => new { Doctor = x, VisitsCount = x.Visits.Count })
+                .ToList();
 
-            doctors.ForEach(x => x.Salary += x.Visits.Count * 20);
-            context.UpdateRange(doctors);
+            foreach (var record in doctors)
+            {
+                record.Doctor.Salary += record.VisitsCount * 20;
+                context.Update(record.Doctor);
+            }
         }
     }
 }

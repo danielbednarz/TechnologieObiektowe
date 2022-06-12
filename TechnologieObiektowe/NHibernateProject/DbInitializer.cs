@@ -13,13 +13,13 @@ namespace NHibernateProject
         //private const int nursesCount = 10000;
         //private const int technicalWorkersCount = 500;
 
-        //private const int medicamentCount = 200;
-        //private const int visitCount = 1000;
-        //private const int recipesCount = 1500;
-        //private const int doctorsCount = 50;
-        //private const int patientsCount = 400;
-        //private const int nursesCount = 100;
-        //private const int technicalWorkersCount = 50;
+        private const int medicamentCount = 200;
+        private const int visitCount = 1000;
+        private const int recipesCount = 1500;
+        private const int doctorsCount = 50;
+        private const int patientsCount = 400;
+        private const int nursesCount = 100;
+        private const int technicalWorkersCount = 50;
 
         //private const int medicamentCount = 500;
         //private const int visitCount = 20000;
@@ -29,13 +29,13 @@ namespace NHibernateProject
         //private const int nursesCount = 600;
         //private const int technicalWorkersCount = 200;
 
-        private const int medicamentCount = 500;
-        private const int visitCount = 200000;
-        private const int recipesCount = 300000;
-        private const int doctorsCount = 300;
-        private const int patientsCount = 8000;
-        private const int nursesCount = 600;
-        private const int technicalWorkersCount = 200;
+        //private const int medicamentCount = 500;
+        //private const int visitCount = 200000;
+        //private const int recipesCount = 300000;
+        //private const int doctorsCount = 300;
+        //private const int patientsCount = 8000;
+        //private const int nursesCount = 600;
+        //private const int technicalWorkersCount = 200;
 
         public static void Seed(MainDatabaseContext context)
         {

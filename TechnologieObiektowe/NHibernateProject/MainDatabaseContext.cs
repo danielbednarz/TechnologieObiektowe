@@ -68,6 +68,11 @@ namespace NHibernateProject
             _session.Save(entity);
         }
 
+        public void Update<T>(T entity)
+        {
+            _session.Update(entity);
+        }
+
         public async Task AddRangeAsync<T>(List<T> entity)
         {
             foreach (var item in entity)
