@@ -94,5 +94,21 @@ namespace EntityFrameworkProject
 
             Console.WriteLine("\n\n");
         }
+
+        public static void Update1(MainDatabaseContext context)
+        {
+            var query = context.RecipeMedicaments
+                .Include(x => x.Medicament)
+                .Include(x => x.Recipe)
+                .ThenInclude(y => y.Visit)
+                .Where(x => x.Medicament.Company == "Merck" && (x.Medicament.Type == "proszek" || x.Medicament.Type == "zastrzyk")).ToList();
+
+            foreach (var record in query)
+            {
+                record.Recipe.Visit.Description = "Leki wycofane";
+            }
+
+            context.SaveChanges();
+        }
     }
 }

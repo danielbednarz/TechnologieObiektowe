@@ -20,7 +20,7 @@ namespace EntityFrameworkProject
 
         private static void TestQueries(MainDatabaseContext context)
         {
-            Console.WriteLine("\n\nZapytanie 1.");
+            Console.WriteLine("\n\nSelect - Zapytanie 1.");
             var select1ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Select1(context));
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.MultipleTables, OperationType.Select, select1ElapsedTime);
 
@@ -35,6 +35,9 @@ namespace EntityFrameworkProject
             Console.WriteLine("\n\nZapytanie 4.");
             var select4ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Select4(context));
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.MultipleTables, OperationType.Select, select4ElapsedTime);
+
+            var update1ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Update1(context));
+            Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, update1ElapsedTime);
         }
 
     }
