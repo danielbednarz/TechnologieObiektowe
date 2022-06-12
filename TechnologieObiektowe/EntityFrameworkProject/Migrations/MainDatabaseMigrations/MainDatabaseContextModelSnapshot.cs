@@ -211,6 +211,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                     b.Property<string>("Specialization")
                         .HasColumnType("nvarchar(max)");
 
+                    b.ToTable("Employees", (string)null);
+
                     b.HasDiscriminator().HasValue("Doctor");
                 });
 
@@ -223,6 +225,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Role");
 
+                    b.ToTable("Employees", (string)null);
+
                     b.HasDiscriminator().HasValue("Nurse");
                 });
 
@@ -234,6 +238,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Role");
+
+                    b.ToTable("Employees", (string)null);
 
                     b.HasDiscriminator().HasValue("TechnicalWorker");
                 });

@@ -22,6 +22,9 @@ namespace EntityFrameworkProject
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<RecipeMedicament> RecipeMedicaments { get; set; }
+        public DbSet<Nurse> Nurses { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<TechnicalWorker> TechnicalWorkers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,9 +39,9 @@ namespace EntityFrameworkProject
             base.OnModelCreating(modelBuilder);
 
             //modelBuilder.Entity<Employee>().ToTable("Employees");
-            //modelBuilder.Entity<TechnicalWorker>().ToTable("TechnicalWorkers");
-            //modelBuilder.Entity<Nurse>().ToTable("Nurses");
-            //modelBuilder.Entity<Doctor>().ToTable("Doctor");
+            modelBuilder.Entity<TechnicalWorker>().ToTable("Employees");
+            modelBuilder.Entity<Nurse>().ToTable("Employees");
+            modelBuilder.Entity<Doctor>().ToTable("Employees");
 
             modelBuilder.Entity<Employee>().HasDiscriminator<string>("Proffesion");
             modelBuilder.Entity<Nurse>().Property(x => x.Role).HasColumnName("Role");

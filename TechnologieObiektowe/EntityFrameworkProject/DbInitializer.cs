@@ -13,13 +13,13 @@ namespace EntityFrameworkProject
         //private const int nurseCount = 10000;
         //private const int technicalWorkerCount = 500;
 
-        //private const int medicamentCount = 200;
-        //private const int visitCount = 1000;
-        //private const int recipesCount = 1500;
-        //private const int doctorsCount = 50;
-        //private const int patientsCount = 400;
-        //private const int nursesCount = 100;
-        //private const int technicalWorkersCount = 50;
+        private const int medicamentCount = 200;
+        private const int visitCount = 1000;
+        private const int recipesCount = 1500;
+        private const int doctorsCount = 50;
+        private const int patientsCount = 400;
+        private const int nursesCount = 100;
+        private const int technicalWorkersCount = 50;
 
         //private const int medicamentCount = 500;
         //private const int visitCount = 20000;
@@ -29,13 +29,13 @@ namespace EntityFrameworkProject
         //private const int nursesCount = 600;
         //private const int technicalWorkersCount = 200;
 
-        private const int medicamentCount = 500;
-        private const int visitCount = 200000;
-        private const int recipesCount = 300000;
-        private const int doctorsCount = 300;
-        private const int patientsCount = 8000;
-        private const int nursesCount = 600;
-        private const int technicalWorkersCount = 200;
+        //private const int medicamentCount = 500;
+        //private const int visitCount = 200000;
+        //private const int recipesCount = 300000;
+        //private const int doctorsCount = 300;
+        //private const int patientsCount = 8000;
+        //private const int nursesCount = 600;
+        //private const int technicalWorkersCount = 200;
 
         public static void Seed()
         {
@@ -126,7 +126,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             });
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(nurses));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Nurses.AddRange(nurses));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
@@ -148,7 +148,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             });
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(technicalWorkers));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.TechnicalWorkers.AddRange(technicalWorkers));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
@@ -170,7 +170,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(doctors));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Doctors.AddRange(doctors));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);

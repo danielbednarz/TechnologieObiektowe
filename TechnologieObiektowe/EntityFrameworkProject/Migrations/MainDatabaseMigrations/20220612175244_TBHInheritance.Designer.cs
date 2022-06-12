@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
 {
     [DbContext(typeof(MainDatabaseContext))]
-    [Migration("20220612132257_TBHInheritance")]
+    [Migration("20220612175244_TBHInheritance")]
     partial class TBHInheritance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,6 +213,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                     b.Property<string>("Specialization")
                         .HasColumnType("nvarchar(max)");
 
+                    b.ToTable("Employees", (string)null);
+
                     b.HasDiscriminator().HasValue("Doctor");
                 });
 
@@ -225,6 +227,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Role");
 
+                    b.ToTable("Employees", (string)null);
+
                     b.HasDiscriminator().HasValue("Nurse");
                 });
 
@@ -236,6 +240,8 @@ namespace EntityFrameworkProject.Migrations.MainDatabaseMigrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Role");
+
+                    b.ToTable("Employees", (string)null);
 
                     b.HasDiscriminator().HasValue("TechnicalWorker");
                 });
