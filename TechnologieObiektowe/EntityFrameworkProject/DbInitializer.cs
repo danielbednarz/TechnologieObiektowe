@@ -45,9 +45,7 @@ namespace EntityFrameworkProject
 
             AddMedicaments(context);
             AddDepartments(context);
-            AddNurses(context);
-            AddTechnicalWorkers(context);
-            int firstDoctorId = AddDoctors(context);
+            int firstDoctorId = AddEmployees(context);
             AddPatients(context);
             AddVisits(context, firstDoctorId);
             AddRecipes(context);
@@ -99,13 +97,22 @@ namespace EntityFrameworkProject
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Departments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
-        private static void AddNurses(MainDatabaseContext context)
+        private static int AddEmployees(MainDatabaseContext context)
         {
-            if (context.Nurses.Any())
+            if (context.Employees.Any())
             {
-                return;
+                return context.Employees.First().Id;
             }
 
+            AddNurses(context);
+            AddTechnicalWorkers(context);
+            var doctorId = AddDoctors(context);
+
+            return doctorId;
+        }
+
+        private static void AddNurses(MainDatabaseContext context)
+        {
             var nursesVM = NursesGenerator.GenerateNurses(nursesCount);
             var nurses = nursesVM.Select(x => new Nurse
             {
@@ -119,7 +126,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             });
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Nurses.AddRange(nurses));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(nurses));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
@@ -127,11 +134,6 @@ namespace EntityFrameworkProject
 
         private static void AddTechnicalWorkers(MainDatabaseContext context)
         {
-            if (context.TechnicalWorkers.Any())
-            {
-                return;
-            }
-
             var technicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(technicalWorkersCount);
 
             var technicalWorkers = technicalWorkersVM.Select(x => new TechnicalWorker
@@ -146,7 +148,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             });
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.TechnicalWorkers.AddRange(technicalWorkers));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(technicalWorkers));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
@@ -154,11 +156,6 @@ namespace EntityFrameworkProject
 
         private static int AddDoctors(MainDatabaseContext context)
         {
-            if (context.Doctors.Any())
-            {
-                return context.Doctors.First().Id;
-            }
-
             List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorsCount);
 
             List<Doctor> doctors = doctorsVM.Select(x => new Doctor
@@ -173,7 +170,7 @@ namespace EntityFrameworkProject
                 DepartmentId = x.DepartmentId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Doctors.AddRange(doctors));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Employees.AddRange(doctors));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
             Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
