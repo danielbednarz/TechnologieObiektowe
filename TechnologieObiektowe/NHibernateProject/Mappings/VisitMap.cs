@@ -16,8 +16,10 @@ namespace NHibernateProject.Mappings
               .Inverse()
               .KeyColumn("VisitId")
               .Cascade.All();
-            References(x => x.Patient).Column("PatientId");
-            References(x => x.Doctor).Column("DoctorId");
+            Map(x => x.PatientId);
+            References(x => x.Patient).Column("PatientId").Not.Insert().Not.Update();
+            Map(x => x.DoctorId);
+            References(x => x.Doctor).Column("DoctorId").Not.Insert().Not.Update();
 
             Table("Visits");
         }

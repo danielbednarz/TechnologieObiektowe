@@ -7,9 +7,9 @@ namespace NHibernateProject.Mappings
     {
         public RecipeMedicamentMap()
         {
-            Id(x => x.Id);
-            References(x => x.Recipe).Column("RecipeId");
-            References(x => x.Medicament).Column("MedicamentId");
+            CompositeId().KeyProperty(x => x.RecipeId, "RecipeId").KeyProperty(x => x.MedicamentId, "MedicamentId");
+            References(x => x.Recipe).Column("RecipeId").Not.Insert().Not.Update();
+            References(x => x.Medicament).Column("MedicamentId").Not.Insert().Not.Update();
 
             Table("RecipeMedicaments");
         }

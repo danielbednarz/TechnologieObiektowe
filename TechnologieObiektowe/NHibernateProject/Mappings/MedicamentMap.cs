@@ -19,8 +19,8 @@ namespace NHibernateProject.Mappings
             // .Table("RecipeMedicaments");
             HasMany(x => x.RecipeMedicaments)
               .Inverse()
-              .KeyColumn("MedicamentId")
-              .Cascade.All();
+              .Cascade.All()
+              .Table("RecipeMedicaments");
 
             Table("Medicaments");
         }
