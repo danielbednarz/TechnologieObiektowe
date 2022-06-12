@@ -64,6 +64,7 @@
 
             if (isNewFile)
             {
+                log.WriteLine("Sep=;");
                 log.WriteLine("ORM;Table;Operation;ElapsedTime;");
             }
 

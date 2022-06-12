@@ -14,7 +14,8 @@ namespace NHibernateProject.Mappings
             Map(x => x.Gender);
             Map(x => x.Address);
             Map(x => x.Salary);
-            References(x => x.Department).Column("DepartmentId");
+            Map(x => x.DepartmentId);
+            References(x => x.Department).Column("DepartmentId").Not.Insert().Not.Update();
 
             Table("Employees");
         }

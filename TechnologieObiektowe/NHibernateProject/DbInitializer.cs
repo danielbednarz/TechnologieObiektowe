@@ -7,11 +7,11 @@ namespace NHibernateProject
     {
         //private const int medicamentCount = 2000;
         //private const int visitCount = 100000;
-        //private const int recipeCount = 150000;
-        //private const int doctorCount = 5000;
-        //private const int patientCount = 40000;
-        //private const int nurseCount = 10000;
-        //private const int technicalWorkerCount = 500;
+        //private const int recipesCount = 150000;
+        //private const int doctorsCount = 5000;
+        //private const int patientsCount = 40000;
+        //private const int nursesCount = 10000;
+        //private const int technicalWorkersCount = 500;
 
         private const int medicamentCount = 200;
         private const int visitCount = 1000;
@@ -24,13 +24,13 @@ namespace NHibernateProject
         public static void Seed(MainDatabaseContext context)
         {
             List<Medicament> medicaments = AddMedicaments(context);
-            List<Department> departments = AddDepartments(context);
-            AddNurses(context, departments);
-            AddTechnicalWorkers(context, departments);
-            List<Doctor> doctors = AddDoctors(context, departments);
-            List<Patient> patients = AddPatients(context);
-            List<Visit> visits = AddVisits(context, doctors, patients);
-            List<Recipe> recipes = AddRecipes(context, visits);
+            AddDepartments(context);
+            AddNurses(context);
+            AddTechnicalWorkers(context);
+            int firstDoctorId = AddDoctors(context);
+            AddPatients(context);
+            AddVisits(context, firstDoctorId);
+            List<Recipe> recipes = AddRecipes(context);
             AddRecipeMedicaments(context, recipes, medicaments);
 
             context.Commit();
@@ -59,11 +59,11 @@ namespace NHibernateProject
             return medicaments;
         }
 
-        private static List<Department> AddDepartments(MainDatabaseContext context)
+        private static void AddDepartments(MainDatabaseContext context)
         {
             if (context.Departments.Any())
             {
-                return null;
+                return;
             }
 
             var departmentsVM = DepartmentsGenerator.GenerateDepartments();
@@ -76,11 +76,9 @@ namespace NHibernateProject
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(departments));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.Departments, OperationType.AddRange, addRangeElapsedTime);
-
-            return departments;
         }
 
-        private static void AddNurses(MainDatabaseContext context, List<Department> departments)
+        private static void AddNurses(MainDatabaseContext context)
         {
             if (context.Nurses.Any())
             {
@@ -98,14 +96,14 @@ namespace NHibernateProject
                 Address = x.Address,
                 Salary = decimal.ToDouble(x.Salary),
                 Role = x.Role,
-                Department = departments.FirstOrDefault(y => y.Id == x.DepartmentId)
+                DepartmentId = x.DepartmentId
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(nurses));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static void AddTechnicalWorkers(MainDatabaseContext context, List<Department> departments)
+        private static void AddTechnicalWorkers(MainDatabaseContext context)
         {
             if (context.TechnicalWorkers.Any())
             {
@@ -123,18 +121,18 @@ namespace NHibernateProject
                 Address = x.Address,
                 Salary = decimal.ToDouble(x.Salary),
                 Role = x.Role,
-                Department = departments.FirstOrDefault(y => y.Id == x.DepartmentId)
+                DepartmentId = x.DepartmentId
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(techicalWorkers));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static List<Doctor> AddDoctors(MainDatabaseContext context, List<Department> departments)
+        private static int AddDoctors(MainDatabaseContext context)
         {
             if (context.Doctors.Any())
             {
-                return null;
+                return context.Doctors.First().Id;
             }
 
             List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorsCount);
@@ -148,21 +146,21 @@ namespace NHibernateProject
                 Address = x.Address,
                 BirthDate = x.BirthDate,
                 Salary = decimal.ToDouble(x.Salary),
-                Department = departments.FirstOrDefault(y => y.Id == x.DepartmentId)
+                DepartmentId = x.DepartmentId
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(doctors));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime);
 
             // Pobierane jest ID pierwszego doktora
-            return doctors;
+            return doctors.First().Id;
         }
 
-        private static List<Patient> AddPatients(MainDatabaseContext context)
+        private static void AddPatients(MainDatabaseContext context)
         {
             if (context.Patients.Any())
             {
-                return null;
+                return;
             }
 
             var patientsVM = PatientsGenerator.GeneratePatients(patientsCount);
@@ -178,18 +176,16 @@ namespace NHibernateProject
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(patients));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.Patients, OperationType.AddRange, addRangeElapsedTime);
-
-            return patients;
         }
 
-        private static List<Visit> AddVisits(MainDatabaseContext context, List<Doctor> doctors, List<Patient> patients)
+        private static void AddVisits(MainDatabaseContext context, int firstDoctorId)
         {
             if (context.Visits.Any())
             {
-                return null;
+                return;
             }
 
-            List<VisitVM> visitsVM = VisitsGenerator.GenerateVisits(visitCount, doctorsCount, patientsCount, doctors.FirstOrDefault().Id);
+            List<VisitVM> visitsVM = VisitsGenerator.GenerateVisits(visitCount, doctorsCount, patientsCount, firstDoctorId);
 
             List<Visit> visits = visitsVM.Select(x => new Visit
             {
@@ -197,17 +193,15 @@ namespace NHibernateProject
                 Diagnosis = x.Diagnosis,
                 Description = x.Description,
                 Cost = decimal.ToDouble(x.Cost),
-                Patient = patients.FirstOrDefault(y => y.Id == x.PatientId),
-                Doctor = doctors.FirstOrDefault(y => y.Id == x.DoctorId)
+                PatientId = x.PatientId,
+                DoctorId = x.DoctorId
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(visits));
             Logger.WriteCsvLog(OrmType.NHibernate, TableType.Visits, OperationType.AddRange, addRangeElapsedTime);
-
-            return visits;
         }
 
-        private static List<Recipe> AddRecipes(MainDatabaseContext context, List<Visit> visits)
+        private static List<Recipe> AddRecipes(MainDatabaseContext context)
         {
             if (context.Recipes.Any())
             {
@@ -219,7 +213,7 @@ namespace NHibernateProject
             List<Recipe> recipes = recipesVM.Select(x => new Recipe
             {
                 IssueDate = x.IssueDate,
-                Visit = visits.FirstOrDefault(y => y.Id == x.VisitId)
+                VisitId = x.VisitId
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(recipes));
@@ -240,11 +234,10 @@ namespace NHibernateProject
             Random rnd = new Random();
             foreach (var recipe in recipes)
             {
-                int randMedicament = rnd.Next(0, medicaments.Count - 1);
                 RecipeMedicament recipeMedicament = new RecipeMedicament()
                 {
-                    Recipe = recipe,
-                    Medicament = medicaments[randMedicament]
+                    RecipeId = recipe.Id,
+                    MedicamentId = medicaments[rnd.Next(1, medicaments.Count)].Id,
                 };
                 list.Add(recipeMedicament);
             }

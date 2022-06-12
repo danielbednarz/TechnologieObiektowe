@@ -16,9 +16,10 @@ namespace NHibernateProject.Mappings
             // .Table("RecipeMedicaments");
             HasMany(x => x.RecipeMedicaments)
               .Inverse()
-              .KeyColumn("RecipeId")
-              .Cascade.All();
-            References(x => x.Visit).Column("VisitId");
+              .Cascade.All()
+              .Table("RecipeMedicaments");
+            Map(x => x.VisitId);
+            References(x => x.Visit).Column("VisitId").Not.Insert().Not.Update();
 
             Table("Recipes");
         }
