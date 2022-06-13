@@ -7,7 +7,7 @@ namespace NHibernateProject.Mappings
     {
         public NurseMap()
         {
-            KeyColumn("Id");
+            Abstract();
             Map(x => x.Role);
 
             Table("Nurses");

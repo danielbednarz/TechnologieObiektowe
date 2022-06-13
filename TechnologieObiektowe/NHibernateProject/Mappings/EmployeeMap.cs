@@ -7,7 +7,8 @@ namespace NHibernateProject.Mappings
     {
         public EmployeeMap()
         {
-            Id(x => x.Id);
+            UseUnionSubclassForInheritanceMapping();
+            Id(x => x.Id).GeneratedBy.Assigned();
             Map(x => x.Name);
             Map(x => x.Surname);
             Map(x => x.BirthDate);

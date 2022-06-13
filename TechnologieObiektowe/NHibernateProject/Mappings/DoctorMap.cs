@@ -7,7 +7,7 @@ namespace NHibernateProject.Mappings
     {
         public DoctorMap()
         {
-            KeyColumn("Id");
+            Abstract();
             Map(x => x.Specialization);
             HasMany(x => x.Visits)
               .Inverse()

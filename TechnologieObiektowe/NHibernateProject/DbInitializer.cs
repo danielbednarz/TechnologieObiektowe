@@ -47,7 +47,7 @@ namespace NHibernateProject
             AddPatients(context);
             AddVisits(context, firstDoctorId);
             List<Recipe> recipes = AddRecipes(context);
-            AddRecipeMedicaments(context, recipes, medicaments);
+            AddRecipeMedicaments(context, recipes, medicaments); 
 
             context.Commit();
         }
@@ -103,8 +103,11 @@ namespace NHibernateProject
 
             var nursesVM = NursesGenerator.GenerateNurses(nursesCount);
 
+            int id = 0;
+
             List<Nurse> nurses = nursesVM.Select(x => new Nurse()
             {
+                Id = ++id,
                 Name = x.Name,
                 Surname = x.Surname,
                 BirthDate = x.BirthDate,
@@ -128,8 +131,11 @@ namespace NHibernateProject
 
             var techicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(technicalWorkersCount);
 
+            int id = nursesCount;
+
             List<TechnicalWorker> techicalWorkers = techicalWorkersVM.Select(x => new TechnicalWorker()
             {
+                Id = ++id,
                 Name = x.Name,
                 Surname = x.Surname,
                 BirthDate = x.BirthDate,
@@ -153,8 +159,11 @@ namespace NHibernateProject
 
             List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorsCount);
 
+            int id = nursesCount + technicalWorkersCount;
+
             List<Doctor> doctors = doctorsVM.Select(x => new Doctor
             {
+                Id = ++id,
                 Name = x.Name,
                 Surname = x.Surname,
                 Gender = x.Gender,

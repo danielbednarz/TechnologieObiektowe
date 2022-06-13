@@ -7,7 +7,7 @@ namespace NHibernateProject.Mappings
     {
         public TechnicalWorkerMap()
         {
-            KeyColumn("Id");
+            Abstract();
             Map(x => x.Role);
 
             Table("TechnicalWorkers");
