@@ -33,7 +33,7 @@
             log.Close();
         }
 
-        public static void WriteCsvLog(OrmType orm, TableType table, OperationType operation, TimeSpan elapsedTime)
+        public static void WriteCsvLog(OrmType orm, InheritanceType inheritance, TableType table, OperationType operation, TimeSpan elapsedTime)
         {
             FileInfo logFileInfo;
 
@@ -65,10 +65,10 @@
             if (isNewFile)
             {
                 log.WriteLine("Sep=;");
-                log.WriteLine("ORM;Table;Operation;ElapsedTime;");
+                log.WriteLine("ORM;Inheritance;Table;Operation;ElapsedTime;");
             }
 
-            log.WriteLine($"{orm};{table};{operation};{elapsedTime};");
+            log.WriteLine($"{orm};{inheritance};{table};{operation};{elapsedTime};");
             log.Close();
         }
     }

@@ -26,7 +26,7 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
 
         var seedElapsedTime = StopwatchHelper.MeasureExecutionTime(() => DbInitializer.Seed(context));
 
-        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Create, seedElapsedTime);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Create, seedElapsedTime);
     }
     catch (Exception ex)
     {
@@ -44,22 +44,28 @@ using (var session = NHibernateExtensions.OpenSession("Server=OMEN-15\\SQLINSTAN
         context.BeginTransaction();
 
         var selectReceiptsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectReceipts(context));
-        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectReceiptsElapsedTime);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectReceiptsElapsedTime);
 
         var selectDepartmentsVisitsCostsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectDepartmentsVisitsCosts(context));
-        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectDepartmentsVisitsCostsElapsedTime);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectDepartmentsVisitsCostsElapsedTime);
 
         var selectCompaniesWithMedicamentsCountElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectCompaniesWithMedicamentsCount(context));
-        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectCompaniesWithMedicamentsCountElapsedTime);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectCompaniesWithMedicamentsCountElapsedTime);
 
         var selectPatientWithMostMedicinesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.SelectPatientWithMostMedicines(context));
-        Logger.WriteCsvLog(OrmType.NHibernate, TableType.MultipleTables, OperationType.Select, selectPatientWithMostMedicinesElapsedTime);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectPatientWithMostMedicinesElapsedTime);
 
-        var updateVisitDescriptions = StopwatchHelper.MeasureExecutionTime(() => Query.UpdateVisitDescriptions(context));
-        Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, updateVisitDescriptions);
+        var selectDoctorsVisits = StopwatchHelper.MeasureExecutionTime(() => Query.SelectDoctorsVisits(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectDoctorsVisits);
+
+        var selectMedicamentsTypesInFestYearHalf = StopwatchHelper.MeasureExecutionTime(() => Query.SelectMedicamentsTypesInFestYearHalf(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, selectMedicamentsTypesInFestYearHalf);
+
+        var updateVisitDescriptionsElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.UpdateVisitDescriptions(context));
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Visits, OperationType.Update, updateVisitDescriptionsElapsedTime);
 
         var updateDoctorsSalaryByDepartmentByVisitCount = StopwatchHelper.MeasureExecutionTime(() => Query.UpdateDoctorsSalaryByDepartmentByVisitCount(context));
-        Logger.WriteCsvLog(OrmType.EntityFramework, TableType.Visits, OperationType.Update, updateDoctorsSalaryByDepartmentByVisitCount);
+        Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Visits, OperationType.Update, updateDoctorsSalaryByDepartmentByVisitCount);
 
     }
     catch (Exception ex)

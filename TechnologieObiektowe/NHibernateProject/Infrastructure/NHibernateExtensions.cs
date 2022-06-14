@@ -27,7 +27,7 @@ namespace NHibernateProject.Infrastructure
                   MsSqlConfiguration.MsSql2012.ConnectionString(connectionString).ShowSql())
                   //.Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
                   .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Visit>().Conventions.Add<CustomForeignKeyConvention>())
-                  .ExposeConfiguration(y => new SchemaExport(y).Create(true, true))
+                  .ExposeConfiguration(y => new SchemaExport(y).Create(true, false))
                   .BuildSessionFactory();
 
             return sessionFactory.OpenSession();
