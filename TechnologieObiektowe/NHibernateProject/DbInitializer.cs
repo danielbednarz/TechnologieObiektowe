@@ -13,13 +13,13 @@ namespace NHibernateProject
         //private const int nursesCount = 10000;
         //private const int technicalWorkersCount = 500;
 
-        private const int medicamentCount = 200;
-        private const int visitCount = 1000;
-        private const int recipesCount = 1500;
-        private const int doctorsCount = 50;
-        private const int patientsCount = 400;
-        private const int nursesCount = 100;
-        private const int technicalWorkersCount = 50;
+        //private const int medicamentCount = 200;
+        //private const int visitCount = 1000;
+        //private const int recipesCount = 1500;
+        //private const int doctorsCount = 50;
+        //private const int patientsCount = 400;
+        //private const int nursesCount = 100;
+        //private const int technicalWorkersCount = 50;
 
         //private const int medicamentCount = 500;
         //private const int visitCount = 20000;
@@ -29,13 +29,13 @@ namespace NHibernateProject
         //private const int nursesCount = 600;
         //private const int technicalWorkersCount = 200;
 
-        //private const int medicamentCount = 500;
-        //private const int visitCount = 200000;
-        //private const int recipesCount = 300000;
-        //private const int doctorsCount = 300;
-        //private const int patientsCount = 8000;
-        //private const int nursesCount = 600;
-        //private const int technicalWorkersCount = 200;
+        private const int medicamentCount = 500;
+        private const int visitCount = 200000;
+        private const int recipesCount = 300000;
+        private const int doctorsCount = 300;
+        private const int patientsCount = 8000;
+        private const int nursesCount = 600;
+        private const int technicalWorkersCount = 200;
 
         public static void Seed(MainDatabaseContext context)
         {
@@ -70,7 +70,7 @@ namespace NHibernateProject
 
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(medicaments));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime);
 
             return medicaments;
         }
@@ -91,7 +91,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(departments));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Departments, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Departments, OperationType.AddRange, addRangeElapsedTime);
         }
 
         private static void AddNurses(MainDatabaseContext context)
@@ -116,7 +116,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(nurses));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime);
         }
 
         private static void AddTechnicalWorkers(MainDatabaseContext context)
@@ -141,7 +141,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(techicalWorkers));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime);
         }
 
         private static int AddDoctors(MainDatabaseContext context)
@@ -166,7 +166,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(doctors));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime);
 
             // Pobierane jest ID pierwszego doktora
             return doctors.First().Id;
@@ -191,7 +191,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(patients));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Patients, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Patients, OperationType.AddRange, addRangeElapsedTime);
         }
 
         private static void AddVisits(MainDatabaseContext context, int firstDoctorId)
@@ -214,7 +214,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(visits));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Visits, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Visits, OperationType.AddRange, addRangeElapsedTime);
         }
 
         private static List<Recipe> AddRecipes(MainDatabaseContext context)
@@ -233,7 +233,7 @@ namespace NHibernateProject
             }).ToList();
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(recipes));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime);
 
             return recipes;
         }
@@ -259,7 +259,7 @@ namespace NHibernateProject
             }
 
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(list));
-            Logger.WriteCsvLog(OrmType.NHibernate, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime);
+            Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime);
 
             //List<Recipe> recipes = context.Recipes.Where(x => x.Id != null).ToList();
             //foreach (var recipe in recipes)

@@ -110,6 +110,62 @@ namespace NHibernateProject.Tests
             Console.WriteLine("\n\n");
         }
 
+        public static void SelectDoctorsVisits(MainDatabaseContext context)
+        {
+            var query = context.Visits
+                .Fetch(x => x.Doctor)
+                    .ThenFetch(x => x.Department)
+                .GroupBy(x => new { x.VisitDate.Year, DepartmentName = x.Doctor.Department.Name, x.Doctor.Surname, x.Doctor.Specialization })
+                .Select(x => new
+                {
+                    x.Key.Year,
+                    x.Key.DepartmentName,
+                    x.Key.Surname,
+                    x.Key.Specialization,
+                    VisitsPerDeparment = x.Count()
+                })
+                .OrderByDescending(x => x.VisitsPerDeparment).ToList();
+
+            foreach (var item in query)
+            {
+                Console.WriteLine($"W roku {item.Year}, w oddziale {item.DepartmentName} lekarz {item.Surname} o specjalizacji {item.Specialization} odbył {item.VisitsPerDeparment} wizyt.");
+            }
+
+            Console.WriteLine("\n\n");
+        }
+
+        public static void SelectMedicamentsTypesInFestYearHalf(MainDatabaseContext context)
+        {
+            var types = context.RecipeMedicaments
+                .Fetch(x => x.Medicament)
+                .Fetch(x => x.Recipe)
+                    .ThenFetch(x => x.Visit)
+                        .ThenFetch(x => x.Doctor)
+                .Fetch(x => x.Recipe)
+                    .ThenFetch(x => x.Visit)
+                        .ThenFetch(x => x.Patient)
+                .Where(x => x.Recipe.IssueDate.Month <= 6 && x.Recipe.Visit.VisitDate.Month <= 6 && x.Recipe.Visit.Patient.BirthDate <= DateTime.Today.AddYears(-30))
+                .GroupBy(x => new { MedicamentType = x.Medicament.Type, Year = x.Recipe.Visit.VisitDate.Year })
+                .Select(x => new
+                {
+                    MedicamentType = x.Key.MedicamentType,
+                    Year = x.Key.Year,
+                    MedicamentTypeCount = x.Count()
+                })
+                .OrderByDescending(x => x.MedicamentTypeCount)
+                .Take(5)
+                .ToList();
+
+            int counter = 0;
+            Console.WriteLine("5 najczęściej wypisywanych na receptach typów leków w pierwszym kwartale danego roku (wizyta + recepta), gdy pacjent był starszy niż 30 lat:");
+            foreach (var x in types)
+            {
+                Console.WriteLine($"#{++counter}: {x.MedicamentType} w roku {x.Year} w ilości {x.MedicamentTypeCount} opakowań.");
+            }
+
+            Console.WriteLine("\n\n");
+        }
+
         public static void UpdateVisitDescriptions(MainDatabaseContext context)
         {
             var recipeMedicaments = context.RecipeMedicaments
