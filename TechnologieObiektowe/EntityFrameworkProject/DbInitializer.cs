@@ -43,6 +43,8 @@ namespace EntityFrameworkProject
 
             context.Database.Migrate();
 
+            context.Database.SetCommandTimeout(180);
+
             AddMedicaments(context);
             AddDepartments(context);
             int firstDoctorId = AddEmployees(context);

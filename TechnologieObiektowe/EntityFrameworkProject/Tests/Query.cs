@@ -51,7 +51,7 @@ namespace EntityFrameworkProject
 
             Console.WriteLine("\n\n");
         }
-         
+
         public static void Select3(MainDatabaseContext context)
         {
             var query = context.RecipeMedicaments.Include(x => x.Medicament)
@@ -93,6 +93,48 @@ namespace EntityFrameworkProject
             Console.WriteLine($"Pacjent z największą przepisaną liczbą leków to {query.PatientName} {query.PatientSurname} ({query.MedicamentsCount}).");
 
             Console.WriteLine("\n\n");
+        }
+
+        public static void Select5(MainDatabaseContext context)
+        {
+            var query = context.Visits
+                .Include(x => x.Doctor)
+                    .ThenInclude(x => x.Department)
+                .GroupBy(x => new { x.VisitDate.Year, DepartmentName = x.Doctor.Department.Name, x.Doctor.Surname, x.Doctor.Specialization })
+                .Select(x => new
+                {
+                    x.Key.Year,
+                    x.Key.DepartmentName,
+                    x.Key.Surname,
+                    x.Key.Specialization,
+                    VisitsPerDeparment = x.Count()
+                })
+                .OrderByDescending(x => x.VisitsPerDeparment).ToList();
+
+            foreach (var item in query)
+            {
+                Console.WriteLine($"{item.Year} - {item.DepartmentName} - {item.Surname}, {item.Specialization} => {item.VisitsPerDeparment}");
+            }
+
+            Console.WriteLine("\n\n");
+        }
+
+        public static void Select6(MainDatabaseContext context)
+        {
+            var query = context.RecipeMedicaments
+                .Include(x => x.Medicament)
+                .Include(x => x.Recipe)
+                    .ThenInclude(y => y.Visit)
+                    .ThenInclude(z => z.Patient)
+                .Where(x => x.Recipe.Visit.Patient.BirthDate < DateTime.Now.AddYears(-30) && x.Recipe.IssueDate.Month <= 3 && x.Recipe.Visit.VisitDate.Month <= 3)
+                .GroupBy(x => new { x.Medicament.Type, x.Recipe.Visit.VisitDate.Year })
+                .Select(x => new
+                {
+                    x.Key.Type,
+                    x.Key.Year,
+                    MedicamentTypeCount = x.Count()
+                })
+                .OrderByDescending(x => x.MedicamentTypeCount).ToList();
         }
 
         public static void Update1(MainDatabaseContext context)
