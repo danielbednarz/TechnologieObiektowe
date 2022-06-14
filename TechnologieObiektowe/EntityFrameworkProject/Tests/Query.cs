@@ -120,6 +120,31 @@ namespace EntityFrameworkProject
             Console.WriteLine("\n\n");
         }
 
+        public static void Select6(MainDatabaseContext context)
+        {
+            var query = context.RecipeMedicaments
+                .Include(x => x.Medicament)
+                .Include(x => x.Recipe)
+                    .ThenInclude(y => y.Visit)
+                    .ThenInclude(z => z.Patient)
+                .Where(x => x.Recipe.Visit.Patient.BirthDate < DateTime.Now.AddYears(-30) && x.Recipe.IssueDate.Month <= 3 && x.Recipe.Visit.VisitDate.Month <= 3)
+                .GroupBy(x => new { x.Medicament.Type, x.Recipe.Visit.VisitDate.Year })
+                .Select(x => new
+                {
+                    x.Key.Type,
+                    x.Key.Year,
+                    MedicamentTypeCount = x.Count()
+                })
+                .OrderByDescending(x => x.MedicamentTypeCount).ToList();
+
+            foreach (var item in query)
+            {
+                Console.WriteLine($"{item.Type} - {item.Year} => {item.MedicamentTypeCount}");
+            }
+
+            Console.WriteLine("\n\n");
+        }
+
         public static void Update1(MainDatabaseContext context)
         {
             var query = context.RecipeMedicaments

@@ -40,6 +40,10 @@ namespace EntityFrameworkProject
             var select5ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Select5(context));
             Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, select5ElapsedTime);
 
+            Console.WriteLine("\n\nZapytanie 6.");
+            var select6ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Select6(context));
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.MultipleTables, OperationType.Select, select6ElapsedTime);
+
             var update1ElapsedTime = StopwatchHelper.MeasureExecutionTime(() => Query.Update1(context));
             Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Visits, OperationType.Update, update1ElapsedTime);
 
