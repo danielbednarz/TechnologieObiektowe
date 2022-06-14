@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkProject
 {
@@ -91,6 +92,30 @@ namespace EntityFrameworkProject
                 .First();
 
             Console.WriteLine($"Pacjent z największą przepisaną liczbą leków to {query.PatientName} {query.PatientSurname} ({query.MedicamentsCount}).");
+
+            Console.WriteLine("\n\n");
+        }
+
+        public static void Select5(MainDatabaseContext context)
+        { 
+            var query = context.Visits
+                .Include(x => x.Doctor)
+                .ThenInclude(x => x.Department)
+                .GroupBy(x => new { x.VisitDate.Year, DepartmentName = x.Doctor.Department.Name, x.Doctor.Surname, x.Doctor.Specialization })
+                .Select(x => new
+                {
+                    x.Key.Year,
+                    x.Key.DepartmentName,
+                    x.Key.Surname,
+                    x.Key.Specialization,
+                    VisitsPerDeparment = x.Count()
+                })
+                .OrderByDescending(x => x.VisitsPerDeparment).ToList();
+
+            foreach (var item in query)
+            {
+                Console.WriteLine($"{item.Year} - {item.DepartmentName} - {item.Surname}, {item.Specialization} => {item.VisitsPerDeparment}");
+            }
 
             Console.WriteLine("\n\n");
         }
