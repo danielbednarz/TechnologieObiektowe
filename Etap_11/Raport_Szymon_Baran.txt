@@ -1,0 +1,9 @@
+W aktualnym etapie:
+- drugi typ dziedziczenia,
+- przeprowadzanie testow poprzez nowe zapytania,
+- rozwoj czesci teoretycznej.
+
+Plany na kolejny etap:
+- trzeci typ dziedziczenia,
+- przedstawienie rezultatow w postaci graficznej,
+- dalsze testy.
