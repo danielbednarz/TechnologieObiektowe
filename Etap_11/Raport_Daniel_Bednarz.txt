@@ -1,0 +1,8 @@
+W aktualnym etapie zosta³o zrealizowane:
+- generowanie pliku CSV z uzyskanymi wynikami,
+- przeprowadzenie kolejnych testów,
+- rozszerzenie Wiki
+
+Plany na kolejny etap:
+- dalsze testy,
+- poprawki, ostatnie szlify projektu

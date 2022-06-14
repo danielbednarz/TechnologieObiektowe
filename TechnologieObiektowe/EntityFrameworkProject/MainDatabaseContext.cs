@@ -31,7 +31,7 @@ namespace EntityFrameworkProject
             //var configuration = ConfigurationHelper.GetConfiguration();
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("MainDatabaseContext"));
 
-            optionsBuilder.UseSqlServer("Server=OMEN-15\\SQLINSTANCE;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;").LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
+            optionsBuilder.UseSqlServer("Server=localhost;Database=EFDatabase;Trusted_Connection=True;Encrypt=False;").LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
