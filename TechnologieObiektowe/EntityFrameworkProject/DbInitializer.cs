@@ -74,7 +74,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Medicaments.AddRange(medicaments));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
 
@@ -96,7 +96,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Departments.AddRange(departments));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Departments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Departments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static int AddEmployees(MainDatabaseContext context)
@@ -131,7 +131,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Nurses.AddRange(nurses));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddTechnicalWorkers(MainDatabaseContext context)
@@ -153,7 +153,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.TechnicalWorkers.AddRange(technicalWorkers));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static int AddDoctors(MainDatabaseContext context)
@@ -175,7 +175,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Doctors.AddRange(doctors));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
 
             // Pobierane jest ID pierwszego doktora
             return doctors.First().Id;
@@ -203,7 +203,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Patients.AddRange(patients));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Patients, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Patients, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddVisits(MainDatabaseContext context, int firstDoctorId)
@@ -238,7 +238,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Visits.AddRange(visits));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Visits, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Visits, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddRecipes(MainDatabaseContext context)
@@ -259,7 +259,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.Recipes.AddRange(recipes));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
         private static void AddMedicamentRecipes(MainDatabaseContext context)
@@ -290,7 +290,7 @@ namespace EntityFrameworkProject
             var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.RecipeMedicaments.AddRange(recipeMedicamets));
             var saveChangesElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.SaveChanges());
 
-            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPT, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
+            Logger.WriteCsvLog(OrmType.EntityFramework, InheritanceType.TPH, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime + saveChangesElapsedTime);
         }
 
     }
