@@ -27,10 +27,32 @@ namespace NHibernateProject.Infrastructure
                   MsSqlConfiguration.MsSql2012.ConnectionString(connectionString).ShowSql().AdoNetBatchSize(0))
                   //.Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
                   .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Visit>().Conventions.Add<CustomForeignKeyConvention>())
-                  .ExposeConfiguration(y => new SchemaExport(y).Create(true, false))
+                  .ExposeConfiguration(y =>
+                  {
+                      new SchemaExport(y).Create(true, true);
+                      y.DataBaseIntegration(z =>
+                      {
+                          z.BatchSize = 50;
+                      });
+                  })
                   .BuildSessionFactory();
 
             return sessionFactory.OpenSession();
+        }
+        public static IStatelessSession OpenStatelessSession(string connectionString)
+        {
+            // expose configuration to comment
+
+            StoreConfiguration cfg = new StoreConfiguration();
+            var sessionFactory = Fluently.Configure()
+               .Database(
+                  MsSqlConfiguration.MsSql2012.ConnectionString(connectionString).ShowSql().AdoNetBatchSize(0))
+                  //.Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Visit>(cfg).Conventions.Add<CustomForeignKeyConvention>()))
+                  .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Visit>().Conventions.Add<CustomForeignKeyConvention>())
+                  .ExposeConfiguration(y => new SchemaExport(y).Create(true, true))
+                  .BuildSessionFactory();
+
+            return sessionFactory.OpenStatelessSession();
         }
 
         public static IServiceCollection AddNHibernate(this IServiceCollection services, string connectionString)

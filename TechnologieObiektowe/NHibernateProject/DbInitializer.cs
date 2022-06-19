@@ -1,4 +1,5 @@
 ﻿using DataGenerator;
+using NHibernate;
 using NHibernateProject.Model;
 
 namespace NHibernateProject
@@ -37,29 +38,26 @@ namespace NHibernateProject
         private const int nursesCount = 600;
         private const int technicalWorkersCount = 200;
 
-        public static void Seed(MainDatabaseContext context)
+        private static ITransaction transaction;
+        public static void Seed(IStatelessSession session, ITransaction _transaction)
         {
-            List<Medicament> medicaments = AddMedicaments(context);
-            AddDepartments(context);
-            AddNurses(context);
-            AddTechnicalWorkers(context);
-            int firstDoctorId = AddDoctors(context);
-            AddPatients(context);
-            AddVisits(context, firstDoctorId);
-            List<Recipe> recipes = AddRecipes(context);
-            AddRecipeMedicaments(context, recipes, medicaments);
+            transaction = _transaction;
+            List<Medicament> medicaments = AddMedicaments(session);
+            AddDepartments(session);
+            AddNurses(session);
+            AddTechnicalWorkers(session);
+            int firstDoctorId = AddDoctors(session);
+            AddPatients(session);
+            AddVisits(session, firstDoctorId);
+            List<Recipe> recipes = AddRecipes(session);
+            AddRecipeMedicaments(session, recipes, medicaments);
 
-            context.Commit();
+            transaction.Commit();
         }
 
-        private static List<Medicament> AddMedicaments(MainDatabaseContext context)
+        private static List<Medicament> AddMedicaments(IStatelessSession session)
         {
             List<MedicamentVM> medicamentsVM = MedicamentsGenerator.GenerateMedicaments(medicamentCount);
-
-            if (context.Medicaments.Any())
-            {
-                return null;
-            }
 
             List<Medicament> medicaments = medicamentsVM.Select(x => new Medicament()
             {
@@ -69,19 +67,20 @@ namespace NHibernateProject
             }).ToList();
 
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(medicaments));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var medicament in medicaments)
+                {
+                    session.Insert(medicament);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Medicaments, OperationType.AddRange, addRangeElapsedTime);
 
             return medicaments;
         }
 
-        private static void AddDepartments(MainDatabaseContext context)
+        private static void AddDepartments(IStatelessSession session)
         {
-            if (context.Departments.Any())
-            {
-                return;
-            }
-
             var departmentsVM = DepartmentsGenerator.GenerateDepartments();
 
             List<Department> departments = departmentsVM.Select(x => new Department()
@@ -90,17 +89,18 @@ namespace NHibernateProject
                 PhoneNumber = x.PhoneNumber
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(departments));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var department in departments)
+                {
+                    session.Insert(department);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Departments, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static void AddNurses(MainDatabaseContext context)
+        private static void AddNurses(IStatelessSession session)
         {
-            if (context.Nurses.Any())
-            {
-                return;
-            }
-
             var nursesVM = NursesGenerator.GenerateNurses(nursesCount);
 
             List<Nurse> nurses = nursesVM.Select(x => new Nurse()
@@ -115,17 +115,18 @@ namespace NHibernateProject
                 DepartmentId = x.DepartmentId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(nurses));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in nurses)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Nurses, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static void AddTechnicalWorkers(MainDatabaseContext context)
+        private static void AddTechnicalWorkers(IStatelessSession session)
         {
-            if (context.TechnicalWorkers.Any())
-            {
-                return;
-            }
-
             var techicalWorkersVM = TechnicalWorkersGenerator.GenerateTechnicalWorkers(technicalWorkersCount);
 
             List<TechnicalWorker> techicalWorkers = techicalWorkersVM.Select(x => new TechnicalWorker()
@@ -140,17 +141,18 @@ namespace NHibernateProject
                 DepartmentId = x.DepartmentId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(techicalWorkers));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in techicalWorkers)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.TechnicalWorkers, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static int AddDoctors(MainDatabaseContext context)
+        private static int AddDoctors(IStatelessSession session)
         {
-            if (context.Doctors.Any())
-            {
-                return context.Doctors.First().Id;
-            }
-
             List<DoctorVM> doctorsVM = DoctorsGenerator.GenerateDoctors(doctorsCount);
 
             List<Doctor> doctors = doctorsVM.Select(x => new Doctor
@@ -165,20 +167,21 @@ namespace NHibernateProject
                 DepartmentId = x.DepartmentId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(doctors));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in doctors)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Doctors, OperationType.AddRange, addRangeElapsedTime);
 
             // Pobierane jest ID pierwszego doktora
             return doctors.First().Id;
         }
 
-        private static void AddPatients(MainDatabaseContext context)
+        private static void AddPatients(IStatelessSession session)
         {
-            if (context.Patients.Any())
-            {
-                return;
-            }
-
             var patientsVM = PatientsGenerator.GeneratePatients(patientsCount);
 
             List<Patient> patients = patientsVM.Select(x => new Patient()
@@ -190,17 +193,18 @@ namespace NHibernateProject
                 Address = x.Address
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(patients));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in patients)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Patients, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static void AddVisits(MainDatabaseContext context, int firstDoctorId)
+        private static void AddVisits(IStatelessSession session, int firstDoctorId)
         {
-            if (context.Visits.Any())
-            {
-                return;
-            }
-
             List<VisitVM> visitsVM = VisitsGenerator.GenerateVisits(visitCount, doctorsCount, patientsCount, firstDoctorId);
 
             List<Visit> visits = visitsVM.Select(x => new Visit
@@ -213,16 +217,18 @@ namespace NHibernateProject
                 DoctorId = x.DoctorId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(visits));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in visits)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Visits, OperationType.AddRange, addRangeElapsedTime);
         }
 
-        private static List<Recipe> AddRecipes(MainDatabaseContext context)
+        private static List<Recipe> AddRecipes(IStatelessSession session)
         {
-            if (context.Recipes.Any())
-            {
-                return null;
-            }
 
             var recipesVM = RecipesGenerator.GenerateRecipes(recipesCount, visitCount);
 
@@ -232,19 +238,20 @@ namespace NHibernateProject
                 VisitId = x.VisitId
             }).ToList();
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(recipes));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in recipes)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.Recipes, OperationType.AddRange, addRangeElapsedTime);
 
             return recipes;
         }
 
-        private static void AddRecipeMedicaments(MainDatabaseContext context, List<Recipe> recipes, List<Medicament> medicaments)
+        private static void AddRecipeMedicaments(IStatelessSession session, List<Recipe> recipes, List<Medicament> medicaments)
         {
-            if (context.RecipeMedicaments.Any())
-            {
-                return;
-            }
-
             List<RecipeMedicament> list = new();
 
             Random rnd = new Random();
@@ -258,15 +265,21 @@ namespace NHibernateProject
                 list.Add(recipeMedicament);
             }
 
-            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() => context.AddRange(list));
+            var addRangeElapsedTime = StopwatchHelper.MeasureExecutionTime(() =>
+            {
+                foreach (var nurse in list)
+                {
+                    session.Insert(nurse);
+                }
+            });
             Logger.WriteCsvLog(OrmType.NHibernate, InheritanceType.TPT, TableType.RecipeMedicaments, OperationType.AddRange, addRangeElapsedTime);
 
-            //List<Recipe> recipes = context.Recipes.Where(x => x.Id != null).ToList();
+            //List<Recipe> recipes = session.Recipes.Where(x => x.Id != null).ToList();
             //foreach (var recipe in recipes)
             //{
-            //    Medicament medicament = context.Medicaments.FirstOrDefault();
+            //    Medicament medicament = session.Medicaments.FirstOrDefault();
             //    recipe.RecipeMedicaments.Add(medicament);
-            //    await context.AddMedicamentToRecipe(recipe);
+            //    await session.AddMedicamentToRecipe(recipe);
             //}
         }
     }
