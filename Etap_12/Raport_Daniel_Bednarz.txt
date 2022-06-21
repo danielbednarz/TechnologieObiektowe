@@ -1,0 +1,8 @@
+W aktualnym etapie zosta³o zrealizowane:
+- testy wydajnoœciowe,
+- rozszerzenie czêœci teoretycznej w wiki dot. przeprowadzonych testow,
+- dodanie zapytañ wykorzystywanych w testach.
+
+Plany na kolejny etap:
+- wnioski koñcowe,
+- ostatnie testy i zakoñczenie prac nad projektem.

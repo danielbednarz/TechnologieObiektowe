@@ -127,7 +127,7 @@ namespace EntityFrameworkProject
                 .Include(x => x.Recipe)
                     .ThenInclude(y => y.Visit)
                     .ThenInclude(z => z.Patient)
-                .Where(x => x.Recipe.Visit.Patient.BirthDate < DateTime.Now.AddYears(-30) && x.Recipe.IssueDate.Month <= 3 && x.Recipe.Visit.VisitDate.Month <= 3)
+                .Where(x => x.Recipe.Visit.Patient.BirthDate < DateTime.Now.AddYears(-30) && x.Recipe.IssueDate.Month <= 6 && x.Recipe.Visit.VisitDate.Month <= 6)
                 .GroupBy(x => new { x.Medicament.Type, x.Recipe.Visit.VisitDate.Year })
                 .Select(x => new
                 {
@@ -135,6 +135,7 @@ namespace EntityFrameworkProject
                     x.Key.Year,
                     MedicamentTypeCount = x.Count()
                 })
+                .Take(5)
                 .OrderByDescending(x => x.MedicamentTypeCount).ToList();
 
             foreach (var item in query)
