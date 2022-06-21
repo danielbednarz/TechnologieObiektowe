@@ -1,0 +1,8 @@
+W aktualnym etapie:
+- trzeci typ dziedziczenia w NH,
+- testy wydajnosciowe zapytan,
+- testy wplywu konsoli na wydajnosc; porownanie typow sesji.
+
+Plany na kolejny etap:
+- finalne testy,
+- opis wnioskow projektowych.
