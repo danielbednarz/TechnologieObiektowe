@@ -29,13 +29,13 @@ namespace EntityFrameworkProject
         //private const int nursesCount = 600;
         //private const int technicalWorkersCount = 200;
 
-        private const int medicamentCount = 500;
-        private const int visitCount = 200000;
-        private const int recipesCount = 300000;
-        private const int doctorsCount = 300;
-        private const int patientsCount = 8000;
-        private const int nursesCount = 600;
-        private const int technicalWorkersCount = 200;
+        private const int medicamentCount = 50000;
+        private const int visitCount = 700000;
+        private const int recipesCount = 1000000;
+        private const int doctorsCount = 15000;
+        private const int patientsCount = 100000;
+        private const int nursesCount = 20000;
+        private const int technicalWorkersCount = 10000;
 
         public static void Seed()
         {
