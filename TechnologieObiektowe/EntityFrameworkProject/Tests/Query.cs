@@ -109,6 +109,7 @@ namespace EntityFrameworkProject
                     x.Key.Specialization,
                     VisitsPerDeparment = x.Count()
                 })
+                .Take(5)
                 .OrderByDescending(x => x.VisitsPerDeparment).ToList();
 
             foreach (var item in query)
